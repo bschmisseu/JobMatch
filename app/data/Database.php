@@ -13,7 +13,7 @@ namespace App\data;
 
 Class Database 
 {
-    private $servername = "v4ogsd1bmdo80lv1:t7ild4b4k2b4irxw@sulnwdk5uwjw1r2k.cbetxkdyhwsb.us-east-1.rds.amazonaws.com";
+    private $servername = "sulnwdk5uwjw1r2k.cbetxkdyhwsb.us-east-1.rds.amazonaws.com";
     private $username = "v4ogsd1bmdo80lv1";
     private $password = "t7ild4b4k2b4irxw";
     private $database_name = "g9ui5u8rlxw02hgx";
