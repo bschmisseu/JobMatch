@@ -69,7 +69,8 @@ class UserController extends Controller
             //Checks to see if the user id valid
             if($returnNum > 1)
             {
-                $currentUser = $this->getCurrentUser($returnNum);   
+                $currentUser = $this->getCurrentUser($returnNum);  
+                echo "user status" . $currentUser->isActive(); 
                 //A descision is made to see if the account has been suspended
                 if($currentUser->isActive() == 1)
                 {
