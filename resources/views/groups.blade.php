@@ -32,7 +32,7 @@
                 <tr style="text-align: center">
                		<td>{{$group->getId()}}</td>
                		<td>{{$group->getName()}}</td>
-               		<td>{{$group->getUserId()}}</td>
+               		<td>{{$group->getOwnerName()}}</td>
                		<td>
                			@if(session()->get('currentUser')->getIdNum() == $group->getUserId())
     					<button onclick="openEditGroupForm({{$group->getId()}}, '{{$group->getName()}}')" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xe150;</i></button>

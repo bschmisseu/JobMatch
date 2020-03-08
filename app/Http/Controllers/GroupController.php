@@ -3,10 +3,10 @@
 /**
  * Bryce Schmisseur and Hermes Mimini
  * Job Match Application 3.0
- * AdminController.php  3.0
- * Febuary 23 2020
+ * GroupController.php  1.0
+ * March 8 2020
  *
- * Admin controller in order to pass through data from the views to the buessiness methods
+ * Group controller in order to pass through data from the views to the buessiness methods
  */
 
 namespace App\Http\Controllers;
@@ -30,6 +30,11 @@ class GroupController extends Controller
     }
     
     
+    /**
+     * Method to set the list of groups for the user
+     * @throws ValidationException
+     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
+     */
     public function groupListPage()
     {
         try
@@ -51,6 +56,12 @@ class GroupController extends Controller
         } 
     }
     
+    /**
+     * Interacts with the busienss service inorder to add a group to the database
+     * @param Request $request
+     * @throws ValidationException
+     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
+     */
     public function addGroup(Request $request)
     {
         try
@@ -81,6 +92,12 @@ class GroupController extends Controller
         } 
     }
     
+    /**
+     * Updates any name changes of a group 
+     * @param Request $request
+     * @throws ValidationException
+     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
+     */
     public function editGroup(Request $request)
     {
         try
@@ -112,6 +129,12 @@ class GroupController extends Controller
         } 
     }
     
+    /**
+     * Removes a group from the database and returns the user to the group list page
+     * @param Request $request
+     * @throws ValidationException
+     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
+     */
     public function deleteGroup(Request $request)
     {
         try
@@ -135,6 +158,11 @@ class GroupController extends Controller
         } 
     }
     
+    /**
+     * Gathers information on the current user and the group selected to add the user to the group 
+     * @param Request $request
+     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
+     */
     public function joinGroup(Request $request)
     {
         try
@@ -152,6 +180,11 @@ class GroupController extends Controller
         } 
     }
     
+    /**
+     * Gathers information on the user and the current group to remove the user from the group
+     * @param Request $request
+     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
+     */
     public function leaveGroup(Request $request)
     {
         try
@@ -169,6 +202,10 @@ class GroupController extends Controller
         }
     }
     
+    /**
+     * Method to validate the form data for a group addition
+     * @param Request $request
+     */
     private function validateFormGroup(Request $request)
     {
         $rules = [
@@ -178,6 +215,10 @@ class GroupController extends Controller
         $this->validate($request, $rules);
     }
     
+    /**
+     * Method to validate the form data for a group edit
+     * @param Request $request
+     */
     private function validateEditGroup(Request $request)
     {
         $rules = [

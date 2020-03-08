@@ -17,6 +17,7 @@ Class Groups
     private $name;
     private $userId;
     private $users;
+    private $ownerName; 
     
     /**
      * 
@@ -78,16 +79,29 @@ Class Groups
         $this->userId = $userId;
     } 
     
+    /**
+     * Getter method for the users property
+     * @return $users - array: users that are apart of the group
+     */
     public function getUsers()
     {
         return $this->users;
     }
     
+    /**
+     * Setter method for the users property
+     * @param $users - array: users that are apart of the group
+     */
     public function setUsers(array $users)
     {
         $this->users = $users;
     }
     
+    /**
+     * Method to determine if a specific user is apart of a group
+     * @param int $userId
+     * @return boolean
+     */
     public function isApart(int $userId)
     {
         $isApart = false;
@@ -104,4 +118,19 @@ Class Groups
         return $isApart;
     }
     
+    /**
+     * @return mixed
+     */
+    public function getOwnerName()
+    {
+        return $this->ownerName;
+    }
+
+    /**
+     * @param mixed $ownerName
+     */
+    public function setOwnerName($ownerName)
+    {
+        $this->ownerName = $ownerName;
+    } 
 }

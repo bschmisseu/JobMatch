@@ -3,8 +3,8 @@
 /**
  * Bryce Schmisseur and Hermes Mimini
  * Job Match Application 3.0
- * SkillBusinessService.php  3.0
- * Febuary 23 2020
+ * GroupBusinessService.php  3.0
+ * March 8 2020
  *
  * Business Service used to connect the contonller method with the data service for CRUD operations 
  */
@@ -12,10 +12,13 @@
 namespace App\business;
 
 use App\data\GroupDataService;
+use App\data\UserDataService;
+use Illuminate\Support\Facades\Log;
 
 Class GroupBusinessService implements GroupBusinessInterface
 {
     private $dataService;
+    private $userService; 
     
     /**
      * Defualt Constructor
@@ -23,6 +26,7 @@ Class GroupBusinessService implements GroupBusinessInterface
     public function __construct()
     {
         $this->dataService = new GroupDataService();
+        $this->userService = new UserDataService();
     }
     
     /**
@@ -90,7 +94,18 @@ Class GroupBusinessService implements GroupBusinessInterface
      */
     public function viewAll()
     {
-        return $this->dataService->viewAll();
+        $groups = $this->dataService->viewAll();
+
+        for($i = 0; $i < count($groups); $i++)
+        {
+            $currentId = $groups[$i]->getUserId();
+
+            $currentUser = $this->userService->viewById($currentId);
+
+            $groups[$i]->setOwnerName($currentUser->getUserCredential()->getUserName());
+        }
+        
+        return $groups;
     }
     
     /**

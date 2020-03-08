@@ -3,8 +3,8 @@
 /**
  * Bryce Schmisseur and Hermes Mimini
  * Job Match Application 3.0
- * SkillDataService.php  1.0
- * Febuary 23 2020
+ * GroupDataService.php  1.0
+ * March 8 2020
  *
  * DataService in order to implement CRUD operations to the database
  */
@@ -244,6 +244,7 @@ Class GroupDataService implements GroupDataInterface
     {
         try
         {
+            //SQL statment to add a user to a group 
             $sqlStatement = "INSERT INTO `USER_has_GROUPS` (`USER_ID`, `GROUPS_ID`) VALUES ('{$userId}', '{$objectid}');";
             
             //Runs the query in the database
@@ -270,6 +271,7 @@ Class GroupDataService implements GroupDataInterface
     {
         try
         {
+            //SQL statment to remove a user from a group
             $sqlGroups = "DELETE FROM `USER_has_GROUPS` WHERE `USER_has_GROUPS`.`USER_ID` = {$userId} 
                             AND `USER_has_GROUPS`.`GROUPS_ID` = {$objectid}";
             
