@@ -70,7 +70,7 @@ class UserController extends Controller
             if($returnNum > 1)
             {
                 $currentUser = $this->getCurrentUser($returnNum);  
-                echo "user status" . $currentUser->isActive(); 
+                echo "<script>console.log(user status {$currentUser->isActive()}</script>"; 
                 //A descision is made to see if the account has been suspended
                 if($currentUser->isActive() == 1)
                 {
