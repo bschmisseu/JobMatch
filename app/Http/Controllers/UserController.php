@@ -101,7 +101,8 @@ class UserController extends Controller
         }
         
         catch (Exception $e) {
-            return view('errorPage');
+            return $e->getMessage();
+            //return view('errorPage');
         }   
     }
     
