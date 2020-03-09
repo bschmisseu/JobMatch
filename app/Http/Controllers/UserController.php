@@ -113,8 +113,8 @@ class UserController extends Controller
      */
     public function registerUser(Request $request)
     {
-        try 
-        {
+//         try 
+//         {
             $this->validateFormUser($request);
             
             //Gathers all information from the registration form
@@ -155,16 +155,16 @@ class UserController extends Controller
                 $data = ['returnMessage' => "Error Processing Request!"];
                 return view('login')->with($data); 
             }
-        }
+//         }
         
-        catch(ValidationException $invalidException) {
-            throw $invalidException;
-        }
+//         catch(ValidationException $invalidException) {
+//             throw $invalidException;
+//         }
         
-        catch (Exception $e) {
-            echo "<script>console.log('Register User " . $e->getMessage() . "')</script>";
-            return view('errorPage');
-        } 
+//         catch (Exception $e) {
+//             echo "<script>console.log('Register User " . $e->getMessage() . "')</script>";
+//             return view('errorPage');
+//         } 
     }
     
     /**
