@@ -52,7 +52,7 @@ class UserController extends Controller
      */
     public function authenticateUser(Request $request)
     {
-        // try
+//         try
 //         {
             $this->validateForm($request);
             
@@ -69,8 +69,7 @@ class UserController extends Controller
             //Checks to see if the user id valid
             if($returnNum > 1)
             {
-                $currentUser = $this->getCurrentUser($returnNum);  
-                echo "<script>console.log(user status {$currentUser->isActive()}</script>"; 
+                $currentUser = $this->service->getCurrentUser($returnNum);  
                 //A descision is made to see if the account has been suspended
                 if($currentUser->isActive() == 1)
                 {
@@ -95,16 +94,16 @@ class UserController extends Controller
                 $data = ['returnMessage' => "Incorrect User Name or Password!"];
                 return view('login')->with($data);
             }
-        // }
+//         }
         
-        // catch(ValidationException $invalidException) {
-        //     throw $invalidException;
-        // }
+//         catch(ValidationException $invalidException) {
+//             throw $invalidException;
+//         }
         
-        // catch (Exception $e) {
-        //     return $e->getMessage();
-        //     //return view('errorPage');
-        // } 
+//         catch (Exception $e) {
+//             //return $e->getMessage();
+//             return view('errorPage');
+//         }   
     }
     
     /**
