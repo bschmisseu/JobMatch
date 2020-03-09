@@ -52,8 +52,8 @@ class UserController extends Controller
      */
     public function authenticateUser(Request $request)
     {
-//         try
-//         {
+        try
+        {
             $this->validateForm($request);
             
             //Gathers the inforamtion from the login form
@@ -94,16 +94,16 @@ class UserController extends Controller
                 $data = ['returnMessage' => "Incorrect User Name or Password!"];
                 return view('login')->with($data);
             }
-//         }
+        }
         
-//         catch(ValidationException $invalidException) {
-//             throw $invalidException;
-//         }
+        catch(ValidationException $invalidException) {
+            throw $invalidException;
+        }
         
-//         catch (Exception $e) {
-//             //return $e->getMessage();
-//             return view('errorPage');
-//         }   
+        catch (Exception $e) {
+            //return $e->getMessage();
+            return view('errorPage');
+        }   
     }
     
     /**
@@ -113,8 +113,8 @@ class UserController extends Controller
      */
     public function registerUser(Request $request)
     {
-//         try 
-//         {
+        try 
+        {
             $this->validateFormUser($request);
             
             //Gathers all information from the registration form
@@ -155,16 +155,16 @@ class UserController extends Controller
                 $data = ['returnMessage' => "Error Processing Request!"];
                 return view('login')->with($data); 
             }
-//         }
+        }
         
-//         catch(ValidationException $invalidException) {
-//             throw $invalidException;
-//         }
+        catch(ValidationException $invalidException) {
+            throw $invalidException;
+        }
         
-//         catch (Exception $e) {
-//             echo "<script>console.log('Register User " . $e->getMessage() . "')</script>";
-//             return view('errorPage');
-//         } 
+        catch (Exception $e) {
+            echo "<script>console.log('Register User " . $e->getMessage() . "')</script>";
+            return view('errorPage');
+        } 
     }
     
     /**
