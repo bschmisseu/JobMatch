@@ -52,8 +52,8 @@ class UserController extends Controller
      */
     public function authenticateUser(Request $request)
     {
-        try
-        {
+        // try
+//         {
             $this->validateForm($request);
             
             //Gathers the inforamtion from the login form
@@ -95,16 +95,16 @@ class UserController extends Controller
                 $data = ['returnMessage' => "Incorrect User Name or Password!"];
                 return view('login')->with($data);
             }
-        }
+        // }
         
-        catch(ValidationException $invalidException) {
-            throw $invalidException;
-        }
+        // catch(ValidationException $invalidException) {
+        //     throw $invalidException;
+        // }
         
-        catch (Exception $e) {
-            return $e->getMessage();
-            //return view('errorPage');
-        }   
+        // catch (Exception $e) {
+        //     return $e->getMessage();
+        //     //return view('errorPage');
+        // } 
     }
     
     /**
