@@ -284,7 +284,7 @@ Class UserDataService implements DataServiceInterface {
         try 
         {
             //SQL statment that is run to return all the rows of the job obejcts in the database
-            $sqlQuery = "SELECT * FROM USER_CREDENTIAL WHERE BINARY USERNAME = '{$object->getUserName()}' AND BINARY PASSWORD = '{$object->getPassword()}'";
+            $sqlQuery = "SELECT * FROM USER_CREDENTIAL WHERE USERNAME = '{$object->getUserName()}' AND PASSWORD = '{$object->getPassword()}'";
             
             $resutls = mysqli_query($this->connection, $sqlQuery);
            
