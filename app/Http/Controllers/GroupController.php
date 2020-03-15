@@ -16,10 +16,13 @@ use Exception;
 use App\business\GroupBusinessService;
 use Illuminate\Http\Request;
 use App\model\Groups;
+use App\business\GroupMemberBusinessService;
+use App\model\GroupMembers;
 
 class GroupController extends Controller
 {
     private $service;
+    private $groupMemberService;
     
     /**
      * Defualt contstructor to initialize the Business Service object
@@ -27,6 +30,7 @@ class GroupController extends Controller
     function __construct()
     {
         $this->service = new GroupBusinessService();
+        $this->groupMemberService = new GroupMemberBusinessService();
     }
     
     
@@ -141,9 +145,10 @@ class GroupController extends Controller
         {
             //Gathers all information from the html form
             $groupId = $request->input('groupId');
+            $group = $this->service->findById($groupId);
             
             //Calls Busienss Service meethod to dlete the object within the database
-            $this->service->delete($groupId);
+            $this->service->delete($group);
             
             //Updates the sessions and send the user back to their profile page
             return $this->groupListPage();
@@ -170,7 +175,9 @@ class GroupController extends Controller
             $groupId = $request->input('groupId');
             $userId = $request->session()->get('currentUser')->getIdNum();
             
-            $this->service->joinGroup($groupId, $userId);
+            $groupMember = new GroupMembers($groupId, $userId);
+            
+            $this->groupMemberService->create($groupMember);
             
             return $this->groupListPage();
         }
@@ -192,7 +199,9 @@ class GroupController extends Controller
             $groupId = $request->input('groupId');
             $userId = $request->session()->get('currentUser')->getIdNum();
             
-            $this->service->leaveGroup($groupId, $userId);
+            $groupMember = new GroupMembers($groupId, $userId);
+            
+            $this->groupMemberService->delete($groupMember);
             
             return $this->groupListPage();
         }

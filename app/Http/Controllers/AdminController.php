@@ -69,9 +69,10 @@ class AdminController extends Controller
         {
             //Gets the users id that is being requested to delete
             $userId = $request->input('userId');
+            $user = $this->service->findById($userId);
             
             //Calls the business service to delete the user based on the user id given
-            $this->service->delete($userId);
+            $this->service->delete($user);
             
             //Refreshes the admin page with an updated list of users from the business service
             return $this->adminPage();
@@ -99,7 +100,7 @@ class AdminController extends Controller
             $userId = $request->input('userId');
             
             //Gets the full user object from the business service based on the id
-            $currentUser = $this->service->viewById($userId);
+            $currentUser = $this->service->findById($userId);
             
             //A decision to see if the user needs to be suspended or un suspended
             if($currentUser->isActive() == 1)
@@ -141,7 +142,7 @@ class AdminController extends Controller
             $userId = $request->input('userId');
             
             //Redirects the user to a page where all the information of the users is displayed with the users object
-            $data = ['currentUser' => $this->service->viewById($userId)];
+            $data = ['currentUser' => $this->service->findById($userId)];
             return view('adminUserView')->with($data); 
         }
         
@@ -205,9 +206,10 @@ class AdminController extends Controller
         {
             //Gathers all information from the html form
             $jobListingId = $request->input('jobListingId');
+            $jobListing = $this->service->findById($jobListingId);
             
             //Calls busienss service method in order to delete it within the database
-            $this->jobListingService->delete($jobListingId);
+            $this->jobListingService->delete($jobListing);
             
             //Updates the sessions and sends the user back to the admin page
             return $this->adminPage();

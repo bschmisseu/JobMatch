@@ -86,4 +86,10 @@ Route::post('/deleteGroup', 'GroupController@deleteGroup');
 Route::post('/joinGroup', 'GroupController@joinGroup');
 
 Route::post('/leaveGroup', 'GroupController@leaveGroup');
+
+Route::get('/jobListings', 'JobListingController@jobListingPage');
+
+Route::post('/applyJobListing', 'JobListingController@applyJobListing');
+
+Route::post('/searchJobListing', 'JobListingController@searchJobListing');
    

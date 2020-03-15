@@ -13,9 +13,8 @@ namespace App\business;
 
 use App\data\GroupDataService;
 use App\data\UserDataService;
-use Illuminate\Support\Facades\Log;
 
-Class GroupBusinessService implements GroupBusinessInterface
+Class GroupBusinessService implements BusinessServiceInterface
 {
     private $dataService;
     private $userService; 
@@ -42,9 +41,9 @@ Class GroupBusinessService implements GroupBusinessInterface
      * {@inheritDoc}
      * @see \App\business\BusinessServiceInterface::viewById()
      */
-    public function viewById(int $id)
+    public function findById(int $id)
     {
-        return $this->dataService->viewById($id);
+        return $this->dataService->findById($id);
     }
 
     /**
@@ -72,9 +71,9 @@ Class GroupBusinessService implements GroupBusinessInterface
      * {@inheritDoc}
      * @see \App\business\BusinessServiceInterface::viewByParentId()
      */
-    public function viewByParentId(int $parentId)
+    public function findByParent(int $parentId)
     {
-        return $this->dataService->viewByParent($parentId);
+        return $this->dataService->findByParent($parentId);
     }
 
     /**
@@ -82,9 +81,9 @@ Class GroupBusinessService implements GroupBusinessInterface
      * {@inheritDoc}
      * @see \App\business\BusinessServiceInterface::delete()
      */
-    public function delete(int $id)
+    public function delete($object)
     {
-        return $this->dataService->delete($id);
+        return $this->dataService->delete($object);
     }
 
     /**
@@ -100,7 +99,7 @@ Class GroupBusinessService implements GroupBusinessInterface
         {
             $currentId = $groups[$i]->getUserId();
 
-            $currentUser = $this->userService->viewById($currentId);
+            $currentUser = $this->userService->findById($currentId);
 
             $groups[$i]->setOwnerName($currentUser->getUserCredential()->getUserName());
         }
@@ -111,20 +110,11 @@ Class GroupBusinessService implements GroupBusinessInterface
     /**
      * 
      * {@inheritDoc}
-     * @see \App\business\GroupBusinessInterface::joinGroup()
+     * @see \App\business\BusinessServiceInterface::findByObject()
      */
-    public function joinGroup($objectId, $userId)
+    public function findByObject($object)
     {
-        return $this->dataService->joinGroup($objectId, $userId);
+        return $this->dataService->findByObject($object);
     }
-    
-    /**
-     * 
-     * {@inheritDoc}
-     * @see \App\business\GroupBusinessInterface::leaveGroup()
-     */
-    public function leaveGroup($objectId, $userId)
-    {
-        return $this->dataService->leaveGroup($objectId, $userId);
-    }
+
 }

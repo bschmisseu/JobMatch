@@ -31,9 +31,9 @@ Class JobListingDataService implements DataServiceInterface
     /**
      * 
      * {@inheritDoc}
-     * @see \App\data\DataServiceInterface::viewById()
+     * @see \App\data\DataServiceInterface::findById()
      */
-    public function viewById(int $id)
+    public function findById(int $id)
     {
         try
         {
@@ -126,19 +126,54 @@ Class JobListingDataService implements DataServiceInterface
      * {@inheritDoc}
      * @see \App\data\DataServiceInterface::findBy()
      */
-    public function findBy($object)
-    {}
+    public function findByObject($object)
+    {
+        try
+        {
+            //creates an array to store the objects
+            $objects = array();
+            $indexJobListing = 0;
+            
+            //SQL statment that is run to return all the rows of the job obejcts in the database
+            $sqlQuery = "SELECT * FROM JOB_LISTING WHERE POSITION LIKE '%{$object}%' OR DESCRIPTION LIKE '%{$object}%';";
+            $resutls = mysqli_query($this->connection, $sqlQuery);
+            
+            //While loop to iterate through all the rows that were returned
+            while($row = $resutls->fetch_assoc())
+            {
+                //Gets the users id of current user
+                $id = $row['ID'];
+                
+                //Intialized a varible with the users object
+                $currentJobListing = $this->findById($id);
+                
+                //Adds the education models to the array
+                $objects[$indexJobListing] = $currentJobListing;
+                $indexJobListing++;
+            }
+            
+            //returns the array of objects
+            return $objects;
+        }
+        
+        catch(Exception $e)
+        {
+            //Logs the exception and throws the custom exception
+            Log::error("Exception: ", array("message" => $e->getMessage()));
+            throw new DatabaseException("Database Exception: " . $e->getMessage(), 0, $e);
+        }
+    }
 
     /**
      * 
      * {@inheritDoc}
      * @see \App\data\DataServiceInterface::delete()
      */
-    public function delete(int $id)
+    public function delete($object)
     {
         try 
         {
-            $sqlSkill = "DELETE FROM `JOB_LISTING` WHERE `ID`= {$id};";
+            $sqlSkill = "DELETE FROM `JOB_LISTING` WHERE `ID`= {$object->getId()};";
             
             $this->connection->query($sqlSkill);
             
@@ -177,7 +212,7 @@ Class JobListingDataService implements DataServiceInterface
                 $id = $row['ID'];
                 
                 //Intialized a varible with the users object
-                $currentJobListing = $this->viewByID($id);
+                $currentJobListing = $this->findById($id);
                 
                 //Adds the education models to the array
                 $objects[$indexJobListing] = $currentJobListing;
@@ -201,6 +236,6 @@ Class JobListingDataService implements DataServiceInterface
      * {@inheritDoc}
      * @see \App\data\DataServiceInterface::viewByParent()
      */
-    public function viewByParent(int $parentId)
+    public function findByParent(int $parentId)
     {}   
 }

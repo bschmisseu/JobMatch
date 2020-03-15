@@ -29,9 +29,9 @@ Class EducationDataService implements DataServiceInterface
     /**
      * 
      * {@inheritDoc}
-     * @see \App\data\DataServiceInterface::viewById()
+     * @see \App\data\DataServiceInterface::findById()
      */
-    public function viewById(int $id)
+    public function findById(int $id)
     {
         try
         {
@@ -134,12 +134,12 @@ Class EducationDataService implements DataServiceInterface
      * {@inheritDoc}
      * @see \App\data\DataServiceInterface::delete()
      */
-    public function delete(int $id)
+    public function delete($object)
     {
         try
         {
             //Parameterised SQL to delete an education from the database
-            $sqlEducation = "DELETE FROM `EDUCATION` WHERE `ID`= {$id};";
+            $sqlEducation = "DELETE FROM `EDUCATION` WHERE `ID`= {$object->getId()};";
             
             //Runs the DELETE within the databse
             $this->connection->query($sqlEducation);
@@ -180,7 +180,7 @@ Class EducationDataService implements DataServiceInterface
                 $id = $row['ID'];
                 
                 //Intialized a varible with the education object
-                $currentEducation = $this->viewByID($id);
+                $currentEducation = $this->findById($id);
                 
                 //Adds the education models to the array
                 $objects[$indexEducation] = $currentEducation;
@@ -204,7 +204,7 @@ Class EducationDataService implements DataServiceInterface
      * {@inheritDoc}
      * @see \App\data\DataServiceInterface::viewByParent()
      */
-    public function viewByParent(int $parentId)
+    public function findByParent(int $parentId)
     {
         try
         {
@@ -223,7 +223,7 @@ Class EducationDataService implements DataServiceInterface
                 $id = $row['ID'];
                 
                 //Intialized a varible with the users object
-                $currentEducation = $this->viewByID($id);
+                $currentEducation = $this->findById($id);
                 
                 //Adds the education models to the array
                 $objects[$indexEducation] = $currentEducation;
@@ -247,6 +247,6 @@ Class EducationDataService implements DataServiceInterface
      * {@inheritDoc}
      * @see \App\data\DataServiceInterface::findBy()
      */
-    public function findBy($object)
+    public function findByObject($object)
     {}  
 }

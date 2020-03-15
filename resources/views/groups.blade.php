@@ -45,13 +45,13 @@
     						<form method= "POST" style="display: inline;" onsubmit="return confirm('Are you sure you want to leave this group?')">
         						<input type="hidden" name ="_token" value="<?php echo csrf_token()?>"/>
         						<input type="hidden" name="groupId" value="{{$group->getId()}}">
-        						<button formaction="leaveGroup" class="clear" title="clear" data-toggle="tooltip"><i class="material-icons">&#xe14c;</i></button>
+        						<button formaction="leaveGroup" class="leave" title="leave" data-toggle="tooltip"><i class="material-icons">&#xe14c;</i></button>
         					</form>
     					@else
     						<form method= "POST" style="display: inline;" onsubmit="return confirm('Are you sure you want to join this group?')">
         						<input type="hidden" name ="_token" value="<?php echo csrf_token()?>"/>
         						<input type="hidden" name="groupId" value="{{$group->getId()}}">
-        						<button formaction="joinGroup" class="checkmark" title="checkmark" data-toggle="tooltip"><i class="material-icons">&#xe5ca;</i></button>
+        						<button formaction="joinGroup" class="join" title="join" data-toggle="tooltip"><i class="material-icons">&#xe5ca;</i></button>
         					</form>
     					@endif	
     				</td>

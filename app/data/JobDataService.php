@@ -29,9 +29,9 @@ Class JobDataService implements DataServiceInterface
     /**
      * 
      * {@inheritDoc}
-     * @see \App\data\DataServiceInterface::viewById()
+     * @see \App\data\DataServiceInterface::findById()
      */
-    public function viewById(int $id)
+    public function findById(int $id)
     {
         try
         {
@@ -124,11 +124,11 @@ Class JobDataService implements DataServiceInterface
      * {@inheritDoc}
      * @see \App\data\DataServiceInterface::delete()
      */
-    public function delete(int $id)
+    public function delete($object)
     {
         try
         {
-            $sqlEducation = "DELETE FROM `JOB` WHERE `ID`= {$id};";
+            $sqlEducation = "DELETE FROM `JOB` WHERE `ID`= {$object->getId()};";
             
             $this->connection->query($sqlEducation);
             
@@ -167,7 +167,7 @@ Class JobDataService implements DataServiceInterface
                 $id = $row['ID'];
                 
                 //Intialized a varible with the users object
-                $currentJob = $this->viewByID($id);
+                $currentJob = $this->findById($id);
                 
                 //Adds the education models to the array
                 $objects[$indexJob] = $currentJob;
@@ -191,7 +191,7 @@ Class JobDataService implements DataServiceInterface
      * {@inheritDoc}
      * @see \App\data\DataServiceInterface::viewByParent()
      */
-    public function viewByParent(int $parentId)
+    public function findByParent(int $parentId)
     {
         try
         {
@@ -210,7 +210,7 @@ Class JobDataService implements DataServiceInterface
                 $id = $row['ID'];
                 
                 //Intialized a varible with the users object
-                $currentJob = $this->viewByID($id);
+                $currentJob = $this->findById($id);
                 
                 //Adds the education models to the array
                 $objects[$indexJob] = $currentJob;
@@ -234,6 +234,6 @@ Class JobDataService implements DataServiceInterface
      * {@inheritDoc}
      * @see \App\data\DataServiceInterface::findBy()
      */
-    public function findBy($object)
+    public function findByObject($object)
     {}  
 }

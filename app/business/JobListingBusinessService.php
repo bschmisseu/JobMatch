@@ -38,9 +38,9 @@ Class JobListingBusinessService implements BusinessServiceInterface
      * {@inheritDoc}
      * @see \App\business\BusinessServiceInterface::viewById()
      */
-    public function viewById(int $id)
+    public function findById(int $id)
     {
-        return $this->dataService->viewById($id);
+        return $this->dataService->findById($id);
     }
 
     /**
@@ -68,9 +68,9 @@ Class JobListingBusinessService implements BusinessServiceInterface
      * {@inheritDoc}
      * @see \App\business\BusinessServiceInterface::findBy()
      */
-    public function findBy($object)
+    public function findByObject($object)
     {
-        return $this->dataService->findBy($object);
+        return $this->dataService->findByObject($object);
     }
 
     /**
@@ -78,9 +78,9 @@ Class JobListingBusinessService implements BusinessServiceInterface
      * {@inheritDoc}
      * @see \App\business\BusinessServiceInterface::viewByParentId()
      */
-    public function viewByParentId(int $parentId)
+    public function findByParent(int $parentId)
     {
-        return $this->dataService->viewByParent($parentId);
+        return $this->dataService->findByParent($parentId);
     }
 
     /**
@@ -88,9 +88,9 @@ Class JobListingBusinessService implements BusinessServiceInterface
      * {@inheritDoc}
      * @see \App\business\BusinessServiceInterface::delete()
      */
-    public function delete(int $id)
+    public function delete($object)
     {
-        return $this->dataService->delete($id);
+        return $this->dataService->delete($object);
     }
 
     /**

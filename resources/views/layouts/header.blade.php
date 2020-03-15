@@ -11,7 +11,7 @@
                     	<a class="nav-link" href="profile">Profile <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item active">
-                    	<a class="nav-link" href="#">Job Listings <span class="sr-only">(current)</span></a>
+                    	<a class="nav-link" href="jobListings">Job Listings <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item active">
                     	<a class="nav-link" href="groups">Groups <span class="sr-only">(current)</span></a>
@@ -23,9 +23,10 @@
                     	<a class="nav-link" href="logout">Logout <span class="sr-only">(current)</span></a>
                     </li>
                 </ul>
-                <form class="form-inline my-2 my-lg-0">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search">
-                    <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+                <form class="form-inline my-2 my-lg-0" method="post" action="searchJobListing">
+                	<input type="hidden" name ="_token" value="<?php echo csrf_token()?>"/>
+                    <input class="form-control mr-sm-2" type="search" name="searchParam" placeholder="Search">
+                    <button class="btn btn-primary my-2 my-sm-0" style="color: white !important" type="submit">Search</button>
                 </form>
             </div>
         </nav>

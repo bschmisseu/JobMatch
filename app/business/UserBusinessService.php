@@ -41,7 +41,7 @@ class UserBusinessService implements BusinessServiceInterface{
     public function authenticate($object)
     {
         //Gets an array of users from the data service
-        $returnNum = $this->findBy($object);
+        $returnNum = $this->findByObject($object);
         
         if($returnNum > 1)
         {
@@ -59,10 +59,10 @@ class UserBusinessService implements BusinessServiceInterface{
      * {@inheritDoc}
      * @see \App\business\BusinessServiceInterface::viewById()
      */
-    public function viewById(int $id)
+    public function findById(int $id)
     {
         //returns a user model from the database
-        return $this->dataService->viewById($id);
+        return $this->dataService->findById($id);
     }
 
     /**
@@ -92,10 +92,10 @@ class UserBusinessService implements BusinessServiceInterface{
      * {@inheritDoc}
      * @see \App\business\BusinessServiceInterface::delete()
      */
-    public function delete(int $id)
+    public function delete($object)
     {
         //Sends an id of an object to be deleted
-        return $this->dataService->delete($id);
+        return $this->dataService->delete($object);
     }
 
     /**
@@ -114,9 +114,9 @@ class UserBusinessService implements BusinessServiceInterface{
      * {@inheritDoc}
      * @see \App\business\BusinessServiceInterface::viewByParentId()
      */
-    public function viewByParentId(int $parentId)
+    public function findByParent(int $parentId)
     {
-        return $this->dataService->viewByParent($parentId);
+        return $this->dataService->findByParent($parentId);
     }
     
     /**
@@ -124,8 +124,8 @@ class UserBusinessService implements BusinessServiceInterface{
      * {@inheritDoc}
      * @see \App\business\BusinessServiceInterface::findBy()
      */
-    public function findBy($object)
+    public function findByObject($object)
     {
-        return $this->dataService->findBy($object);
+        return $this->dataService->findByObject($object);
     }  
 }

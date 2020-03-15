@@ -3,17 +3,17 @@
 /**
  * Bryce Schmisseur and Hermes Mimini
  * Job Match Application 3.0
- * JobBusinessService.php  3.0
- * Febuary 23 2020
+ * GroupMemberBusinessService.php  1.0
+ * March 15 2020
  *
- * Business Service used to connect the contonller method with the data service for CRUD operations
+ * Business Service used to connect the contonller method with the data service for CRUD operations 
  */
 
 namespace App\business;
 
-use App\data\JobDataService;
+use App\data\GroupMemberDataService;
 
-Class JobBusinessService implements BusinessServiceInterface
+Class GroupMemberBusinessService implements BusinessServiceInterface
 {
     private $dataService;
     
@@ -22,19 +22,19 @@ Class JobBusinessService implements BusinessServiceInterface
      */
     public function __construct()
     {
-        $this->dataService = new JobDataService();
+        $this->dataService = new GroupMemberDataService();
     }
     
     /**
-     *
+     * 
      * {@inheritDoc}
      * @see \App\business\BusinessServiceInterface::authenticate()
      */
     public function authenticate($object)
     {}
-    
+
     /**
-     *
+     * 
      * {@inheritDoc}
      * @see \App\business\BusinessServiceInterface::viewById()
      */
@@ -42,19 +42,19 @@ Class JobBusinessService implements BusinessServiceInterface
     {
         return $this->dataService->findById($id);
     }
-    
+
     /**
-     *
+     * 
      * {@inheritDoc}
      * @see \App\business\BusinessServiceInterface::create()
      */
     public function create($object)
     {
-        return $this->dataService->create($object);
+       return $this->dataService->create($object); 
     }
-    
+
     /**
-     *
+     * 
      * {@inheritDoc}
      * @see \App\business\BusinessServiceInterface::update()
      */
@@ -62,9 +62,9 @@ Class JobBusinessService implements BusinessServiceInterface
     {
         return $this->dataService->update($object);
     }
-    
+
     /**
-     *
+     * 
      * {@inheritDoc}
      * @see \App\business\BusinessServiceInterface::findBy()
      */
@@ -72,9 +72,9 @@ Class JobBusinessService implements BusinessServiceInterface
     {
         return $this->dataService->findByObject($object);
     }
-    
+
     /**
-     *
+     * 
      * {@inheritDoc}
      * @see \App\business\BusinessServiceInterface::viewByParentId()
      */
@@ -82,9 +82,9 @@ Class JobBusinessService implements BusinessServiceInterface
     {
         return $this->dataService->findByParent($parentId);
     }
-    
+
     /**
-     *
+     * 
      * {@inheritDoc}
      * @see \App\business\BusinessServiceInterface::delete()
      */
@@ -92,9 +92,9 @@ Class JobBusinessService implements BusinessServiceInterface
     {
         return $this->dataService->delete($object);
     }
-    
+
     /**
-     *
+     * 
      * {@inheritDoc}
      * @see \App\business\BusinessServiceInterface::viewAll()
      */

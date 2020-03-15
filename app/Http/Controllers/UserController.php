@@ -305,9 +305,10 @@ class UserController extends Controller
             //Gathers all information from the html form
             $educationId = $request->input('educationId');
             $userId = $request->session()->get('currentUser')->getIdNum();
+            $education = $this->educationService->findById($educationId);
             
             //Calls busienss service method in order to delete it within the database
-            $this->educationService->delete($educationId);
+            $this->educationService->delete($education);
             
             //Updates the sessions and send the user back to their profile page
             $currentUser = $this->getCurrentUser($userId);
@@ -337,10 +338,11 @@ class UserController extends Controller
         {   
             //Gathers all information from the html form
             $jobId = $request->input('jobId');
-            $userId = $this->jobService->viewById($jobId)->getUserId();
+            $userId = $request->session()->get('currentUser')->getIdNum();
+            $job = $this->jobService->findById($jobId);
             
             //Calls Busienss Service meethod to dlete the object within the database
-            $this->jobService->delete($jobId);
+            $this->jobService->delete($job);
             
             //Updates the sessions and send the user back to their profile page
             $currentUser = $this->getCurrentUser($userId);
@@ -371,9 +373,10 @@ class UserController extends Controller
             //Gathers all information from the html form
             $skillId = $request->input('skillId');
             $userId = $request->session()->get('currentUser')->getIdNum();
+            $skill = $this->skillService->findById($skillId);
             
             //Calls Busienss Service meethod to dlete the object within the database
-            $this->skillService->delete($skillId);
+            $this->skillService->delete($skill);
             
             //Updates the sessions and send the user back to their profile page
             $currentUser = $this->getCurrentUser($userId);
@@ -602,10 +605,10 @@ class UserController extends Controller
     {
         try
         {
-            $currentUser = $this->service->viewById($id);
-            $currentEducations = $this->educationService->viewByParentId($id);
-            $currentJobs = $this->jobService->viewByParentId($id);
-            $currentSkills = $this->skillService->viewByParentId($id);
+            $currentUser = $this->service->findById($id);
+            $currentEducations = $this->educationService->findByParent($id);
+            $currentJobs = $this->jobService->findByParent($id);
+            $currentSkills = $this->skillService->findByParent($id);
             
             $currentUser->getUserInformation()->setEducationHistory($currentEducations);
             $currentUser->getUserInformation()->setJobs($currentJobs);

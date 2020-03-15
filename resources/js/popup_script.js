@@ -120,3 +120,23 @@ function openEditGroupForm(goupId, groupName){
   document.getElementById('editGroupId').value = goupId;
   document.getElementById('editGroupName').value = groupName;
 }
+
+function openApplyJobListingForm(jobListingId, company, position, salary, skills, description){
+	  $('#applyJobListingForm').fadeToggle();
+	  document.getElementById('applyJobListingId').value = jobListingId;
+	  document.getElementById('applyJobPosition').value = position;
+	  document.getElementById('applyCompanyName').value = company;
+	  document.getElementById('applyJobSalary').value = salary;
+	  document.getElementById('applyJobSkills').value = skills;
+	  document.getElementById('applyJobDescription').value = description;
+	}
+
+$(function(){
+	$(document).mouseup(function (e){
+		var container = $("#applyJobListingForm");
+		
+		if (!container.is(e.target)&& container.has(e.target).length === 0){
+			container.fadeOut();
+			}
+		});
+	});

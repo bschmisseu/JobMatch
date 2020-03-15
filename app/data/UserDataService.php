@@ -33,9 +33,9 @@ Class UserDataService implements DataServiceInterface {
     /**
      * 
      * {@inheritDoc}
-     * @see \App\data\DataServiceInterface::viewById()
+     * @see \App\data\DataServiceInterface::findById()
      */
-    public function viewById(int $id)
+    public function findById(int $id)
     {  
         try
         {
@@ -199,7 +199,7 @@ Class UserDataService implements DataServiceInterface {
         }
     }
 
-    public function delete(int $id)
+    public function delete($object)
     {
         try
         {
@@ -207,9 +207,9 @@ Class UserDataService implements DataServiceInterface {
             $numRowsAffected = 0;
             
             //Creates SQL Stamtments to delete all traces of the user
-            $sqlUser = "DELETE FROM `USER` WHERE `ID`= {$id};";
-            $sqlUserCred = "DELETE FROM `USER_CREDENTIAL` WHERE `USER_ID`= {$id};";
-            $sqlUserInfo = "DELETE FROM `USER_INFO` WHERE `USER_ID`= {$id};";
+            $sqlUser = "DELETE FROM `USER` WHERE `ID`= {$object->getIdNum()};";
+            $sqlUserCred = "DELETE FROM `USER_CREDENTIAL` WHERE `USER_ID`= {$object->getIdNum()};";
+            $sqlUserInfo = "DELETE FROM `USER_INFO` WHERE `USER_ID`= {$object->getIdNum()};";
             
             //Runs all SQL statements through the database while also incrementing the number of rows affted
             $this->connection->query($sqlUserCred);
@@ -257,7 +257,7 @@ Class UserDataService implements DataServiceInterface {
                 $id = $row['ID'];
                 
                 //Intialized a varible with the users object 
-                $currentUser = $this->viewByID($id);
+                $currentUser = $this->findById($id);
                 
                 //Adds the users object to the array
                 $objects[$indexUser] = $currentUser;
@@ -276,10 +276,10 @@ Class UserDataService implements DataServiceInterface {
         }
     }
     
-    public function viewByParent(int $parentId)
+    public function findByParent(int $parentId)
     {}
     
-    public function findBy($object)
+    public function findByObject($object)
     {
         try 
         {

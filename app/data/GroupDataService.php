@@ -15,7 +15,7 @@ use Illuminate\Support\Facades\Log;
 use Exception;
 use App\model\Groups;
 
-Class GroupDataService implements GroupDataInterface
+Class GroupDataService implements DataServiceInterface
 {
     /**
      * Defualt Constuctor inorder to initialze the connection varible to the database
@@ -29,9 +29,9 @@ Class GroupDataService implements GroupDataInterface
     /**
      * 
      * {@inheritDoc}
-     * @see \App\data\DataServiceInterface::viewById()
+     * @see \App\data\DataServiceInterface::findById()
      */
-    public function viewById(int $id)
+    public function findById(int $id)
     {
         try 
         {
@@ -130,11 +130,11 @@ Class GroupDataService implements GroupDataInterface
      * {@inheritDoc}
      * @see \App\data\DataServiceInterface::delete()
      */
-    public function delete(int $id)
+    public function delete($object)
     {
         try
         {
-            $sqlGroups = "DELETE FROM `GROUPS` WHERE `ID`= {$id};";
+            $sqlGroups = "DELETE FROM `GROUPS` WHERE `ID`= {$object->getId()};";
             
             $this->connection->query($sqlGroups);
             
@@ -173,7 +173,7 @@ Class GroupDataService implements GroupDataInterface
                 $id = $row['ID'];
                 
                 //Intialized a varible with the users object
-                $currentGroups = $this->viewByID($id);
+                $currentGroups = $this->findById($id);
                 
                 //Adds the education models to the array
                 $objects[$indexGroups] = $currentGroups;
@@ -197,7 +197,7 @@ Class GroupDataService implements GroupDataInterface
      * {@inheritDoc}
      * @see \App\data\DataServiceInterface::viewByParent()
      */
-    public function viewByParent(int $parentId)
+    public function findByParent(int $parentId)
     {
         try 
         {
@@ -216,7 +216,7 @@ Class GroupDataService implements GroupDataInterface
                 $id = $row['ID'];
                 
                 //Intialized a varible with the users object
-                $currentGroup = $this->viewByID($id);
+                $currentGroup = $this->findById($id);
                 
                 //Adds the education models to the array
                 $objects[$indexGroups] = $currentGroup;
@@ -234,57 +234,12 @@ Class GroupDataService implements GroupDataInterface
             throw new DatabaseException("Database Exception: " . $e->getMessage(), 0, $e);
         }
     }
-
-    /**
-     * 
-     * {@inheritDoc}
-     * @see \App\data\GroupDataInterface::joinGroup()
-     */
-    public function joinGroup(int $objectid, int $userId)
-    {
-        try
-        {
-            //SQL statment to add a user to a group 
-            $sqlStatement = "INSERT INTO `USER_has_GROUPS` (`USER_ID`, `GROUPS_ID`) VALUES ('{$userId}', '{$objectid}');";
-            
-            //Runs the query in the database
-            $result = $this->connection->query($sqlStatement);
-            
-            //Returns the number of rows affected
-            return $result;
-        }
-        
-        catch(Exception $e)
-        {
-            //Logs the exception and throws the custom exception
-            Log::error("Exception: ", array("message" => $e->getMessage()));
-            throw new DatabaseException("Database Exception: " . $e->getMessage(), 0, $e);
-        }
-    }
     
     /**
      * 
      * {@inheritDoc}
-     * @see \App\data\GroupDataInterface::leaveGroup()
+     * @see \App\data\DataServiceInterface::findBy()
      */
-    public function leaveGroup(int $objectid, int $userId)
-    {
-        try
-        {
-            //SQL statment to remove a user from a group
-            $sqlGroups = "DELETE FROM `USER_has_GROUPS` WHERE `USER_has_GROUPS`.`USER_ID` = {$userId} 
-                            AND `USER_has_GROUPS`.`GROUPS_ID` = {$objectid}";
-            
-            $this->connection->query($sqlGroups);
-            
-            return $this->connection->affected_rows;
-        }
-        
-        catch(Exception $e)
-        {
-            //Logs the exception and throws the custom exception
-            Log::error("Exception: ", array("message" => $e->getMessage()));
-            throw new DatabaseException("Database Exception: " . $e->getMessage(), 0, $e);
-        }
-    }
+    public function findByObject($object)
+    {}
 }

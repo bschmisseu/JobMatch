@@ -29,9 +29,9 @@ Class SkillDataService implements DataServiceInterface
     /**
      * 
      * {@inheritDoc}
-     * @see \App\data\DataServiceInterface::viewById()
+     * @see \App\data\DataServiceInterface::findById()
      */
-    public function viewById(int $id)
+    public function findById(int $id)
     {
         try 
         {
@@ -118,7 +118,7 @@ Class SkillDataService implements DataServiceInterface
      * {@inheritDoc}
      * @see \App\data\DataServiceInterface::findBy()
      */
-    public function findBy($object)
+    public function findByObject($object)
     {}
 
     /**
@@ -126,11 +126,11 @@ Class SkillDataService implements DataServiceInterface
      * {@inheritDoc}
      * @see \App\data\DataServiceInterface::delete()
      */
-    public function delete(int $id)
+    public function delete($object)
     {
         try
         {
-            $sqlSkill = "DELETE FROM `SKILLS` WHERE `ID`= {$id};";
+            $sqlSkill = "DELETE FROM `SKILLS` WHERE `ID`= {$object->getId()};";
             
             $this->connection->query($sqlSkill);
             
@@ -169,7 +169,7 @@ Class SkillDataService implements DataServiceInterface
                 $id = $row['ID'];
                 
                 //Intialized a varible with the users object
-                $currentSkill = $this->viewByID($id);
+                $currentSkill = $this->findById($id);
                 
                 //Adds the education models to the array
                 $objects[$indexSkill] = $currentSkill;
@@ -193,7 +193,7 @@ Class SkillDataService implements DataServiceInterface
      * {@inheritDoc}
      * @see \App\data\DataServiceInterface::viewByParent()
      */
-    public function viewByParent(int $parentId)
+    public function findByParent(int $parentId)
     {
         try 
         {
@@ -212,7 +212,7 @@ Class SkillDataService implements DataServiceInterface
                 $id = $row['ID'];
                 
                 //Intialized a varible with the users object
-                $currentSkill = $this->viewByID($id);
+                $currentSkill = $this->findById($id);
                 
                 //Adds the education models to the array
                 $objects[$indexSkill] = $currentSkill;
