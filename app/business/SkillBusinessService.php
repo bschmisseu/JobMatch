@@ -12,6 +12,7 @@
 namespace App\business;
 
 use App\data\SkillDataService;
+use Illuminate\Support\Facades\Log;
 
 Class SkillBusinessService implements BusinessServiceInterface
 {
@@ -40,6 +41,7 @@ Class SkillBusinessService implements BusinessServiceInterface
      */
     public function findById(int $id)
     {
+        Log::info("Entering and Exiting SkillBusinessService.findById(Int)");
         return $this->dataService->findById($id);
     }
 
@@ -50,6 +52,7 @@ Class SkillBusinessService implements BusinessServiceInterface
      */
     public function create($object)
     {
+       Log::info("Entering and Exiting SkillBusinessService.create(Skill)");
        return $this->dataService->create($object); 
     }
 
@@ -60,6 +63,7 @@ Class SkillBusinessService implements BusinessServiceInterface
      */
     public function update($object)
     {
+        Log::info("Entering and Exiting SkillBusinessService.update(Skill)");
         return $this->dataService->update($object);
     }
 
@@ -70,6 +74,7 @@ Class SkillBusinessService implements BusinessServiceInterface
      */
     public function findByObject($object)
     {
+        Log::info("Entering and Exiting SkillBusinessService.findByObject(Skill)");
         return $this->dataService->findByObject($object);
     }
 
@@ -80,6 +85,7 @@ Class SkillBusinessService implements BusinessServiceInterface
      */
     public function findByParent(int $parentId)
     {
+        Log::info("Entering and Exiting SkillBusinessService.findByParent(Int)");
         return $this->dataService->findByParent($parentId);
     }
 
@@ -90,6 +96,7 @@ Class SkillBusinessService implements BusinessServiceInterface
      */
     public function delete($object)
     {
+        Log::info("Entering and Exiting SkillBusinessService.delete(Skill)");
         return $this->dataService->delete($object);
     }
 
@@ -100,6 +107,7 @@ Class SkillBusinessService implements BusinessServiceInterface
      */
     public function viewAll()
     {
+        Log::info("Entering and Exiting SkillBusinessService.viewAll()");
         return $this->dataService->viewAll();
     }
 }

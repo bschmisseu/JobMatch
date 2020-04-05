@@ -92,4 +92,8 @@ Route::get('/jobListings', 'JobListingController@jobListingPage');
 Route::post('/applyJobListing', 'JobListingController@applyJobListing');
 
 Route::post('/searchJobListing', 'JobListingController@searchJobListing');
+
+Route::resource('/usersrest', 'UsersRestController');
+
+Route::resource('/jobsrest', 'JobsRestController');
    

@@ -12,6 +12,7 @@
 namespace App\business;
 
 use App\data\EducationDataService;
+use Illuminate\Support\Facades\Log;
 
 Class EducationBusinessService implements BusinessServiceInterface
 {
@@ -41,6 +42,7 @@ Class EducationBusinessService implements BusinessServiceInterface
      */
     public function findById(int $id)
     {
+        Log::info("Entering and Exiting EducationBusinessService.findById(Int)");
         return $this->dataService->findById($id);
     }
     
@@ -51,6 +53,7 @@ Class EducationBusinessService implements BusinessServiceInterface
      */
     public function create($object)
     {
+        Log::info("Entering and Exiting EducationBusinessService.create(Education)");
         return $this->dataService->create($object);
     }
     
@@ -61,6 +64,7 @@ Class EducationBusinessService implements BusinessServiceInterface
      */
     public function update($object)
     {
+        Log::info("Entering and Exiting EducationBusinessService.update(Education)");
         return $this->dataService->update($object);
     }
     
@@ -71,6 +75,7 @@ Class EducationBusinessService implements BusinessServiceInterface
      */
     public function findByObject($object)
     {
+        Log::info("Entering and Exiting EducationBusinessService.findByObject(Education)");
         return $this->dataService->findByObject($object);
     }
     
@@ -81,6 +86,7 @@ Class EducationBusinessService implements BusinessServiceInterface
      */
     public function findByParent(int $parentId)
     {
+        Log::info("Entering and Exiting EducationBusinessService.findByParent(Int)");
         return $this->dataService->findByParent($parentId);
     }
     
@@ -91,6 +97,7 @@ Class EducationBusinessService implements BusinessServiceInterface
      */
     public function delete($object)
     {
+        Log::info("Entering and Exiting EducationBusinessService.delete(Education)");
         return $this->dataService->delete($object);
     }
     
@@ -101,6 +108,7 @@ Class EducationBusinessService implements BusinessServiceInterface
      */
     public function viewAll()
     {
+        Log::info("Entering and Exiting EducationBusinessService.viewAll()");
         return $this->dataService->viewAll();
     }
 }

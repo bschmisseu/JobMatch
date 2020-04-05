@@ -13,11 +13,15 @@ namespace App\business;
 
 use App\data\GroupDataService;
 use App\data\UserDataService;
+use App\data\GroupMemberDataService;
+use App\model\GroupMembers;
+use Illuminate\Support\Facades\Log;
 
 Class GroupBusinessService implements BusinessServiceInterface
 {
     private $dataService;
-    private $userService; 
+    private $userService;
+    private $memberService;
     
     /**
      * Defualt Constructor
@@ -26,6 +30,7 @@ Class GroupBusinessService implements BusinessServiceInterface
     {
         $this->dataService = new GroupDataService();
         $this->userService = new UserDataService();
+        $this->memberService = new GroupMemberDataService();
     }
     
     /**
@@ -43,6 +48,7 @@ Class GroupBusinessService implements BusinessServiceInterface
      */
     public function findById(int $id)
     {
+        Log::info("Entering and Exiting GroupBusinessService.findById(Int)");
         return $this->dataService->findById($id);
     }
 
@@ -53,6 +59,7 @@ Class GroupBusinessService implements BusinessServiceInterface
      */
     public function create($object)
     {
+       Log::info("Entering and Exiting GroupBusinessService.create(Group)");
        return $this->dataService->create($object); 
     }
 
@@ -63,6 +70,7 @@ Class GroupBusinessService implements BusinessServiceInterface
      */
     public function update($object)
     {
+        Log::info("Entering and Exiting GroupBusinessService.update(Group)");
         return $this->dataService->update($object);
     }
 
@@ -73,6 +81,7 @@ Class GroupBusinessService implements BusinessServiceInterface
      */
     public function findByParent(int $parentId)
     {
+        Log::info("Entering and Exiting GroupBusinessService.findByParent(Int)");
         return $this->dataService->findByParent($parentId);
     }
 
@@ -83,6 +92,18 @@ Class GroupBusinessService implements BusinessServiceInterface
      */
     public function delete($object)
     {
+        Log::info("Entering GroupBusinessService.delete(Group)");
+        
+        $usersArray = $object->getUsers();
+        
+        for($i = 0; $i < count($usersArray); $i++)
+        {
+            $groupMember = new GroupMembers($object->getId(), $usersArray[$i]);
+            
+            $this->memberService->delete($groupMember);
+        }
+        
+        Log::info("Exiting GroupBusinessService.delete(Group)");
         return $this->dataService->delete($object);
     }
 
@@ -93,6 +114,8 @@ Class GroupBusinessService implements BusinessServiceInterface
      */
     public function viewAll()
     {
+        Log::info("Entering GroupBusinessService.viewAll()");
+        
         $groups = $this->dataService->viewAll();
 
         for($i = 0; $i < count($groups); $i++)
@@ -104,6 +127,7 @@ Class GroupBusinessService implements BusinessServiceInterface
             $groups[$i]->setOwnerName($currentUser->getUserCredential()->getUserName());
         }
         
+        Log::info("Exiting GroupBusinessService.viewAll()");
         return $groups;
     }
     
@@ -114,6 +138,7 @@ Class GroupBusinessService implements BusinessServiceInterface
      */
     public function findByObject($object)
     {
+        Log::info("Entering and Exiting GroupBusinessService.findByObject(Group)");
         return $this->dataService->findByObject($object);
     }
 

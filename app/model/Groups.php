@@ -11,7 +11,7 @@
 
 namespace App\model;
 
-Class Groups 
+Class Groups implements \JsonSerializable
 {
     private $id;
     private $name;
@@ -132,5 +132,11 @@ Class Groups
     public function setOwnerName($ownerName)
     {
         $this->ownerName = $ownerName;
-    } 
+    }
+    
+    public function jsonSerialize()
+    {
+        return get_object_vars($this);
+    }
+ 
 }

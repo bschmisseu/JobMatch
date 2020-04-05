@@ -12,6 +12,7 @@
 namespace App\business;
 
 use App\data\JobDataService;
+use Illuminate\Support\Facades\Log;
 
 Class JobBusinessService implements BusinessServiceInterface
 {
@@ -40,6 +41,7 @@ Class JobBusinessService implements BusinessServiceInterface
      */
     public function findById(int $id)
     {
+        Log::info("Entering and Exiting JobBusinessService.findById(Int)");
         return $this->dataService->findById($id);
     }
     
@@ -50,6 +52,7 @@ Class JobBusinessService implements BusinessServiceInterface
      */
     public function create($object)
     {
+        Log::info("Entering and Exiting JobBusinessService.create(Job)");
         return $this->dataService->create($object);
     }
     
@@ -60,6 +63,7 @@ Class JobBusinessService implements BusinessServiceInterface
      */
     public function update($object)
     {
+        Log::info("Entering and Exiting JobBusinessService.update(Job)");
         return $this->dataService->update($object);
     }
     
@@ -70,6 +74,7 @@ Class JobBusinessService implements BusinessServiceInterface
      */
     public function findByObject($object)
     {
+        Log::info("Entering and Exiting JobBusinessService.findByObject(Job)");
         return $this->dataService->findByObject($object);
     }
     
@@ -80,6 +85,7 @@ Class JobBusinessService implements BusinessServiceInterface
      */
     public function findByParent(int $parentId)
     {
+        Log::info("Entering and Exiting JobBusinessService.findByParent(Int)");
         return $this->dataService->findByParent($parentId);
     }
     
@@ -90,6 +96,7 @@ Class JobBusinessService implements BusinessServiceInterface
      */
     public function delete($object)
     {
+        Log::info("Entering and Exiting JobBusinessService.delete(Job)");
         return $this->dataService->delete($object);
     }
     
@@ -100,6 +107,7 @@ Class JobBusinessService implements BusinessServiceInterface
      */
     public function viewAll()
     {
+        Log::info("Entering and Exiting JobBusinessService.viewAll()");
         return $this->dataService->viewAll();
     }
 }

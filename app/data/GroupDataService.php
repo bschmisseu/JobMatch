@@ -33,6 +33,8 @@ Class GroupDataService implements DataServiceInterface
      */
     public function findById(int $id)
     {
+        Log::info("Entering GroupDataService.findById(Int)");
+        
         try 
         {
             //Stores all the SQL commands used to gather all the inforamtion of the skills
@@ -63,6 +65,7 @@ Class GroupDataService implements DataServiceInterface
             //Creates a Job object and stores it into the array of jobs
             $currentGroup = new Groups($skillId, $name, $userId, $users);
             
+            Log::info("Exiting GroupDataService.findById(Int)");
             return $currentGroup;
         }
         
@@ -81,6 +84,8 @@ Class GroupDataService implements DataServiceInterface
      */
     public function create($object)
     {
+        Log::info("Entering GroupDataService.create(Group)");
+        
         try 
         {
             $sqlStatement = "INSERT INTO `GROUPS` (`ID`, `NAME`, `USER_ID`) VALUES (NULL, 
@@ -90,6 +95,7 @@ Class GroupDataService implements DataServiceInterface
             $result = $this->connection->query($sqlStatement);
             
             //Returns the number of rows affected
+            Log::info("Exiting GroupDataService.create(Group)");
             return $result;
         }
         
@@ -107,13 +113,16 @@ Class GroupDataService implements DataServiceInterface
      * @see \App\data\DataServiceInterface::update()
      */
     public function update($object)
-    {   
+    {  
+        Log::info("Entering GroupDataService.update(Group)");
+        
         try
         {
             $sqlGroups = "UPDATE `GROUPS` SET `NAME` = '{$object->getName()}' WHERE `GROUPS`.`ID` = {$object->getId()};";
             
             $this->connection->query($sqlGroups);
             
+            Log::info("Exiting GroupDataService.update(Group)");
             return $this->connection->affected_rows;
         }
         
@@ -132,12 +141,15 @@ Class GroupDataService implements DataServiceInterface
      */
     public function delete($object)
     {
+        Log::info("Entering GroupDataService.delete(Group)");
+        
         try
         {
             $sqlGroups = "DELETE FROM `GROUPS` WHERE `ID`= {$object->getId()};";
             
             $this->connection->query($sqlGroups);
             
+            Log::info("Exiting GroupDataService.delete(Group)");
             return $this->connection->affected_rows;
         }
         
@@ -156,6 +168,8 @@ Class GroupDataService implements DataServiceInterface
      */
     public function viewAll()
     {
+        Log::info("Entering GroupDataService.viewAll()");
+        
         try 
         {
             //creates an array to store the objects
@@ -181,6 +195,7 @@ Class GroupDataService implements DataServiceInterface
             }
             
             //returns the array of objects
+            Log::info("Exiting GroupDataService.viewAll()");
             return $objects;
         }
         
@@ -199,6 +214,8 @@ Class GroupDataService implements DataServiceInterface
      */
     public function findByParent(int $parentId)
     {
+        Log::info("Entering GroupDataService.findByParent(Int)");
+        
         try 
         {
             //creates an array to store the objects
@@ -224,6 +241,7 @@ Class GroupDataService implements DataServiceInterface
             }
             
             //returns the array of objects
+            Log::info("Exiting GroupDataService.findByParent(Int)");
             return $objects;
         }
         

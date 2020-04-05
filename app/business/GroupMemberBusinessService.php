@@ -12,6 +12,7 @@
 namespace App\business;
 
 use App\data\GroupMemberDataService;
+use Illuminate\Support\Facades\Log;
 
 Class GroupMemberBusinessService implements BusinessServiceInterface
 {
@@ -40,6 +41,7 @@ Class GroupMemberBusinessService implements BusinessServiceInterface
      */
     public function findById(int $id)
     {
+        Log::info("Entering and Exiting GroupBusinessService.findById(Int)");
         return $this->dataService->findById($id);
     }
 
@@ -50,6 +52,7 @@ Class GroupMemberBusinessService implements BusinessServiceInterface
      */
     public function create($object)
     {
+        Log::info("Entering and Exiting GroupBusinessService.create(GroupMember)");
        return $this->dataService->create($object); 
     }
 
@@ -60,6 +63,7 @@ Class GroupMemberBusinessService implements BusinessServiceInterface
      */
     public function update($object)
     {
+        Log::info("Entering and Exiting GroupBusinessService.update(GroupMember)");
         return $this->dataService->update($object);
     }
 
@@ -70,6 +74,7 @@ Class GroupMemberBusinessService implements BusinessServiceInterface
      */
     public function findByObject($object)
     {
+        Log::info("Entering and Exiting GroupBusinessService.findByObject(GroupMember)");
         return $this->dataService->findByObject($object);
     }
 
@@ -80,6 +85,7 @@ Class GroupMemberBusinessService implements BusinessServiceInterface
      */
     public function findByParent(int $parentId)
     {
+        Log::info("Entering and Exiting GroupBusinessService.findByParent(Int)");
         return $this->dataService->findByParent($parentId);
     }
 
@@ -90,6 +96,7 @@ Class GroupMemberBusinessService implements BusinessServiceInterface
      */
     public function delete($object)
     {
+        Log::info("Entering and Exiting GroupBusinessService.delete(GroupMember)");
         return $this->dataService->delete($object);
     }
 
@@ -100,6 +107,7 @@ Class GroupMemberBusinessService implements BusinessServiceInterface
      */
     public function viewAll()
     {
+        Log::info("Entering and Exiting GroupBusinessService.viewAll()");
         return $this->dataService->viewAll();
     }
 }

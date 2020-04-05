@@ -11,7 +11,7 @@
 
 namespace App\model;
 
-Class User
+Class User implements \JsonSerializable
 {
     private $idNum;
     private $firstName;
@@ -210,5 +210,11 @@ Class User
     {
         $this->userInformation = $userInformation;
     }
+    
+    public function jsonSerialize()
+    {
+        return get_object_vars($this);
+    }
+
     
 }

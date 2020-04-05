@@ -11,7 +11,7 @@
 
 namespace App\model;
 
-Class Skill
+Class Skill implements \JsonSerializable
 {
     private $id;
     private $skillString;
@@ -82,5 +82,11 @@ Class Skill
     public function setUserId($userId)
     {
         $this->userId = $userId;
-    }   
+    }
+    
+    public function jsonSerialize()
+    {
+        return get_object_vars($this);
+    }
+   
 }

@@ -11,7 +11,7 @@
 
 namespace App\model;
 
-Class Education
+Class Education implements \JsonSerializable
 {
     private $id; 
     private $name;
@@ -209,4 +209,10 @@ Class Education
     {
         $this->edit = $edit;
     }
+    
+    public function jsonSerialize()
+    {
+        return get_object_vars($this);
+    }
+
 }

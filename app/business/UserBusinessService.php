@@ -14,12 +14,15 @@ namespace App\business;
 use App\data\UserDataService;
 use App\data\EducationDataService;
 use App\data\JobDataService;
+use App\data\SkillDataService;
+use Illuminate\Support\Facades\Log;
 
 class UserBusinessService implements BusinessServiceInterface{
     
     private $dataService;
     private $educationService;
     private $jobService;
+    private $skillService;
     
     /**
      *
@@ -31,6 +34,7 @@ class UserBusinessService implements BusinessServiceInterface{
         $this->dataService = new UserDataService();
         $this->educationService = new EducationDataService();
         $this->jobService = new JobDataService(); 
+        $this->skillService = new SkillDataService();
     }
     
     /**
@@ -40,16 +44,19 @@ class UserBusinessService implements BusinessServiceInterface{
      */
     public function authenticate($object)
     {
+        Log::info("Entering UserBusinessService.authenticate(User)");
         //Gets an array of users from the data service
         $returnNum = $this->findByObject($object);
         
         if($returnNum > 1)
         {
+            Log::info("Exiting UserBusinessService.authenticate(User)");
             return $returnNum;
         }
         
         else
         {
+            Log::info("Exiting UserBusinessService.authenticate(User)");
             return null;
         }
     }
@@ -62,6 +69,7 @@ class UserBusinessService implements BusinessServiceInterface{
     public function findById(int $id)
     {
         //returns a user model from the database
+        Log::info("Entering and Exiting UserBusinessService.findById(Int)");
         return $this->dataService->findById($id);
     }
 
@@ -73,6 +81,7 @@ class UserBusinessService implements BusinessServiceInterface{
     public function create($object)
     {
         //Sends a object to to the data service in write to the database
+        Log::info("Entering and Exiting UserBusinessService.create(User)");
         return $this->dataService->create($object);
     }
 
@@ -84,6 +93,7 @@ class UserBusinessService implements BusinessServiceInterface{
     public function update($object)
     {
         //Sends an updated object to the data service
+        Log::info("Entering and Exiting UserBusinessService.update(User)");
         return $this->dataService->update($object);
     }
 
@@ -94,6 +104,7 @@ class UserBusinessService implements BusinessServiceInterface{
      */
     public function delete($object)
     {
+        Log::info("Entering and Exiting UserBusinessService.delete(User)");
         //Sends an id of an object to be deleted
         return $this->dataService->delete($object);
     }
@@ -105,8 +116,28 @@ class UserBusinessService implements BusinessServiceInterface{
      */
     public function viewAll()
     {
+        Log::info("Entering UserBusinessService.viewAll()");
         //Request an array of all user objects from the data service
-        return $this->dataService->viewAll();
+        $users = $this->dataService->viewAll();
+        
+        for($i = 0; $i < count($users); $i++)
+        {
+            $id = $users[$i]->getIdNum();
+            
+            $currentUser = $this->dataService->findById($id);
+            $currentEducations = $this->educationService->findByParent($id);
+            $currentJobs = $this->jobService->findByParent($id);
+            $currentSkills = $this->skillService->findByParent($id);
+            
+            $currentUser->getUserInformation()->setEducationHistory($currentEducations);
+            $currentUser->getUserInformation()->setJobs($currentJobs);
+            $currentUser->getUserInformation()->setSkills($currentSkills);
+            
+            $users[$i] = $currentUser;
+        }
+        
+        Log::info("Exiting UserBusinessService.viewAll()");
+        return $users;
     }
     
     /**
@@ -116,6 +147,7 @@ class UserBusinessService implements BusinessServiceInterface{
      */
     public function findByParent(int $parentId)
     {
+        Log::info("Entering and Exiting UserBusinessService.findByParent(Int)");
         return $this->dataService->findByParent($parentId);
     }
     
@@ -126,6 +158,7 @@ class UserBusinessService implements BusinessServiceInterface{
      */
     public function findByObject($object)
     {
+        Log::info("Entering and Exiting UserBusinessService.findByObject(User)");
         return $this->dataService->findByObject($object);
     }  
 }

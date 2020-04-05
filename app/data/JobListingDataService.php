@@ -35,6 +35,8 @@ Class JobListingDataService implements DataServiceInterface
      */
     public function findById(int $id)
     {
+        Log::info("Entering JobListingDataService.findById(Int)");
+        
         try
         {
             //Stores all the SQL commands used to gather all the inforamtion of the job listing
@@ -56,6 +58,7 @@ Class JobListingDataService implements DataServiceInterface
             //Creates a Job object and stores it into the array of jobs
             $currentJobListing = new JobListing($jobListingId, $companyName, $position, $salary, $skills, $description);
             
+            Log::info("Exiting JobListingDataService.findById(Int)");
             return $currentJobListing;
         }
         
@@ -74,6 +77,8 @@ Class JobListingDataService implements DataServiceInterface
      */
     public function create($object)
     {
+        Log::info("Entering JobListingDataService.create(JobListing)");
+        
         try 
         {
             $sqlStatement = "INSERT INTO `JOB_LISTING` (`ID`, `COMPANY_NAME`, `POSITION`, `SALARY`, `SKILLS`, `DESCRIPTION`) 
@@ -84,6 +89,7 @@ Class JobListingDataService implements DataServiceInterface
             $result = $this->connection->query($sqlStatement);
             
             //Returns the number of rows affected
+            Log::info("Exiting JobListingDataService.create(JobListing)");
             return $result;
         }
         
@@ -102,6 +108,8 @@ Class JobListingDataService implements DataServiceInterface
      */
     public function update($object)
     {
+        Log::info("Entering JobListingDataService.update(JobListing)");
+        
         try
         {
             $sqlJobListing = "UPDATE `JOB_LISTING` SET `COMPANY_NAME` = '{$object->getCompanyName()}', `POSITION` = '{$object->getPosition()}', 
@@ -110,6 +118,7 @@ Class JobListingDataService implements DataServiceInterface
             
             $this->connection->query($sqlJobListing);
             
+            Log::info("Exiting JobListingDataService.update(JobListing)");
             return $this->connection->affected_rows;
         }
         
@@ -128,6 +137,8 @@ Class JobListingDataService implements DataServiceInterface
      */
     public function findByObject($object)
     {
+        Log::info("Entering JobListingDataService.findByObject(JobListing)");
+        
         try
         {
             //creates an array to store the objects
@@ -153,6 +164,7 @@ Class JobListingDataService implements DataServiceInterface
             }
             
             //returns the array of objects
+            Log::info("Exiting JobListingDataService.findByObject(JobListing)");
             return $objects;
         }
         
@@ -171,12 +183,15 @@ Class JobListingDataService implements DataServiceInterface
      */
     public function delete($object)
     {
+        Log::info("Entering JobListingDataService.delete(JobListing)");
+        
         try 
         {
             $sqlSkill = "DELETE FROM `JOB_LISTING` WHERE `ID`= {$object->getId()};";
             
             $this->connection->query($sqlSkill);
             
+            Log::info("Exiting JobListingDataService.delete(JobListing)");
             return $this->connection->affected_rows;
         }
         
@@ -195,6 +210,8 @@ Class JobListingDataService implements DataServiceInterface
      */
     public function viewAll()
     {
+        Log::info("Entering JobListingDataService.viewAll()");
+        
         try 
         {
             //creates an array to store the objects
@@ -220,6 +237,7 @@ Class JobListingDataService implements DataServiceInterface
             }
             
             //returns the array of objects
+            Log::info("Exiting JobListingDataService.viewAll()");
             return $objects;
         }
         

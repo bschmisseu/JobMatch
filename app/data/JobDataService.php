@@ -33,6 +33,8 @@ Class JobDataService implements DataServiceInterface
      */
     public function findById(int $id)
     {
+        Log::info("Entering JobDataService.findById(Int)");
+        
         try
         {
             //Stores all the SQL commands used to gather all the inforamtion of the jobs
@@ -55,6 +57,7 @@ Class JobDataService implements DataServiceInterface
             //Creates a Job object and stores it into the array of jobs
             $currentJob = new Job($jobId, $jobTitle, $company, $startDate, $endDate, $jobDescription, $userId); 
             
+            Log::info("Exiting JobDataService.findById(Int)");
             return $currentJob;
         }
         
@@ -73,6 +76,8 @@ Class JobDataService implements DataServiceInterface
      */
     public function create($object)
     {
+        Log::info("Entering JobDataService.create(Job)");
+        
         try
         {
             $sqlStatement = "INSERT INTO `JOB` (`ID`, `JOB_TITLE`, `JOB_COMPANY`, `START_DATE`, `END_DATE`, `DESCRIPTION`, `USER_ID`) VALUES (NULL, '{$object->getTitle()}', '{$object->getCompanyName()}', '{$object->getStartingDate()}', '{$object->getEndingDate()}', '{$object->getDescription()} ', '{$object->getUserId()}');";
@@ -81,6 +86,7 @@ Class JobDataService implements DataServiceInterface
             $result = $this->connection->query($sqlStatement);
             
             //Returns the number of rows affected
+            Log::info("Exiting JobDataService.create(Job)");
             return $result;
         }
         
@@ -99,6 +105,8 @@ Class JobDataService implements DataServiceInterface
      */
     public function update($object)
     {
+        Log::info("Entering JobDataService.update(Job)");
+        
         try 
         { 
             $sqlJob = "UPDATE `JOB` SET `JOB_TITLE` = '{$object->getTitle()}',
@@ -108,6 +116,7 @@ Class JobDataService implements DataServiceInterface
             
             $this->connection->query($sqlJob);
             
+            Log::info("Exiting JobDataService.update(Job)");
             return $this->connection->affected_rows;
         }
         
@@ -126,12 +135,15 @@ Class JobDataService implements DataServiceInterface
      */
     public function delete($object)
     {
+        Log::info("Entering JobDataService.delete(Job)");
+        
         try
         {
             $sqlEducation = "DELETE FROM `JOB` WHERE `ID`= {$object->getId()};";
             
             $this->connection->query($sqlEducation);
             
+            Log::info("Exiting JobDataService.delete(Job)");
             return $this->connection->affected_rows;
         }
         
@@ -150,6 +162,8 @@ Class JobDataService implements DataServiceInterface
      */
     public function viewAll()
     {
+        Log::info("Entering JobDataService.viewAll()");
+        
         try 
         {
             //creates an array to store the objects
@@ -175,6 +189,7 @@ Class JobDataService implements DataServiceInterface
             }
             
             //returns the array of objects
+            Log::info("Exiting JobDataService.viewAll()");
             return $objects;
         }
         
@@ -193,6 +208,8 @@ Class JobDataService implements DataServiceInterface
      */
     public function findByParent(int $parentId)
     {
+        Log::info("Entering JobDataService.findByParent(Int)");
+        
         try
         {
             //creates an array to store the objects
@@ -218,6 +235,7 @@ Class JobDataService implements DataServiceInterface
             }
             
             //returns the array of objects
+            Log::info("Exiting JobDataService.findByParent(Int)");
             return $objects;
         }
         

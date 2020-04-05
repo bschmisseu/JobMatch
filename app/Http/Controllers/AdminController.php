@@ -17,19 +17,23 @@ use Exception;
 use App\business\UserBusinessService; 
 use App\business\JobListingBusinessService;
 use App\model\JobListing;
+use App\services\utility\LoggerInterface;
 
 class AdminController extends Controller
 {
     private $service;
     private $jobListingService; 
     
+    protected $logger;
+    
     /**
      * Defualt contstructor to initialize the Business Service object
      */
-    function __construct()
+    function __construct(LoggerInterface $logger)
     {
         $this->service = new UserBusinessService();
         $this->jobListingService = new JobListingBusinessService();
+        $this->logger = $logger; 
     }
     
     /**
@@ -38,6 +42,8 @@ class AdminController extends Controller
      */
     public function adminPage()
     {
+        $this->logger->info("===Entering AdminController.adminPage()");
+        
         try
         {
             //Gets an array of all users within the database 
@@ -46,6 +52,7 @@ class AdminController extends Controller
             ];
             
             //returns the admin page view
+            $this->logger->info("===Exiting AdminController.adminPage() sent to admin");
             return view('admin')->with($data); 
         }
         
@@ -54,6 +61,7 @@ class AdminController extends Controller
         }
         
         catch (Exception $e) {
+            $this->logger->error("===Error AdminController.adminPage()", array("message" => $e->getMessage()));
             return view('errorPage');
         } 
     }
@@ -65,6 +73,8 @@ class AdminController extends Controller
      */
     public function deleteUser(Request $request)
     {
+        $this->logger->info("===Entering AdminController.deleteUser()");
+        
         try 
         {
             //Gets the users id that is being requested to delete
@@ -75,6 +85,7 @@ class AdminController extends Controller
             $this->service->delete($user);
             
             //Refreshes the admin page with an updated list of users from the business service
+            $this->logger->info("===Exiting AdminController.deleteUser() sent to admin");
             return $this->adminPage();
         }
         
@@ -83,6 +94,7 @@ class AdminController extends Controller
         }
         
         catch (Exception $e) {
+            $this->logger->error("===Error AdminController.deleteUser()", array("message" => $e->getMessage()));
             return view('errorPage');
         } 
     }
@@ -94,6 +106,8 @@ class AdminController extends Controller
      */
     public function suspendUser(Request $request)
     {
+        $this->logger->info("===Entering AdminController.suspendUser()");
+        
         try
         {
             //Gets the users id that is being requested to suspend
@@ -117,6 +131,7 @@ class AdminController extends Controller
             $this->service->update($currentUser);
             
             //Refreshes the admin page with an updated list of the users
+            $this->logger->info("===Exiting AdminController.suspendUser() sent to admin");
             return $this->adminPage();
         }
         
@@ -125,6 +140,7 @@ class AdminController extends Controller
         }
         
         catch (Exception $e) {
+            $this->logger->error("===Error AdminController.suspendUser()", array("message" => $e->getMessage()));
             return view('errorPage');
         } 
     }
@@ -136,6 +152,8 @@ class AdminController extends Controller
      */
     public function viewUser(Request $request)
     {
+        $this->logger->info("===Entering AdminController.viewUser()");
+        
         try 
         {
             //Gets the users id that the request is made on the get more information 
@@ -143,6 +161,7 @@ class AdminController extends Controller
             
             //Redirects the user to a page where all the information of the users is displayed with the users object
             $data = ['currentUser' => $this->service->findById($userId)];
+            $this->logger->info("===Exiting AdminController.viewUser() sent to admin");
             return view('adminUserView')->with($data); 
         }
         
@@ -151,6 +170,7 @@ class AdminController extends Controller
         }
         
         catch (Exception $e) {
+            $this->logger->error("===Error AdminController.viewUser()", array("message" => $e->getMessage()));
             return view('errorPage');
         } 
     }
@@ -163,6 +183,8 @@ class AdminController extends Controller
      */
     public function addJobListing(Request $request)
     {
+        $this->logger->info("===Entering AdminController.addJobListing()");
+        
         try 
         {
             //Validates form
@@ -182,6 +204,7 @@ class AdminController extends Controller
             $this->jobListingService->create($currentJobListing);
             
             //Updates the sessions and sends the user back to the admin page
+            $this->logger->info("===Exiting AdminController.addJobListing() sent to admin");
             return $this->adminPage();
         }
         
@@ -190,6 +213,7 @@ class AdminController extends Controller
         }
         
         catch (Exception $e) {
+            $this->logger->error("===Error AdminController.addJobListing()", array("message" => $e->getMessage()));
             return view('errorPage');
         } 
     }
@@ -202,6 +226,8 @@ class AdminController extends Controller
      */
     public function deleteJobListing(Request $request)
     {
+        $this->logger->info("===Entering AdminController.deleteJobListing()");
+        
         try 
         {
             //Gathers all information from the html form
@@ -212,6 +238,7 @@ class AdminController extends Controller
             $this->jobListingService->delete($jobListing);
             
             //Updates the sessions and sends the user back to the admin page
+            $this->logger->info("===Exiting AdminController.deleteJobListing() sent to admin");
             return $this->adminPage();
         }
         
@@ -220,6 +247,7 @@ class AdminController extends Controller
         }
         
         catch (Exception $e) {
+            $this->logger->error("===Error AdminController.deleteJobListing()", array("message" => $e->getMessage()));
             return view('errorPage');
         } 
     }
@@ -232,6 +260,8 @@ class AdminController extends Controller
      */
     public function editJobListing(Request $request)
     {
+        $this->logger->info("===Entering AdminController.editJobListing()");
+        
         try 
         {
             //Validates form
@@ -251,6 +281,7 @@ class AdminController extends Controller
             $this->jobListingService->update($currentJobListing);
 
             //Updates the sessions and sends the user back to the admin page
+            $this->logger->info("===Exiting AdminController.editJobListing() sent to admin");
             return $this->adminPage();
         }
         
@@ -259,6 +290,7 @@ class AdminController extends Controller
         }
         
         catch (Exception $e) {
+            $this->logger->error("===Error AdminController.editJobListing()", array("message" => $e->getMessage()));
             return view('errorPage');
         } 
     }
@@ -270,10 +302,10 @@ class AdminController extends Controller
     private function validateFormJobListing(Request $request)
     {
         $rules = [
-            'jobPosition' => 'Required | Between:4,20 | Alpha',
-            'companyName' => 'Required | Between:4,20 | Alpha',
+            'jobPosition' => 'Required',
+            'companyName' => 'Required | Between:4,20',
             'jobSalary' => 'Required | numeric',
-            'jobSkills' => 'Required | Between:4,20',
+            'jobSkills' => 'Required',
             'jobDescription' => 'Required | Between:9,200'
         ];
         

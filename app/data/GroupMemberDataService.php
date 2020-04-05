@@ -40,6 +40,8 @@ Class GroupMemberDataService implements DataServiceInterface
      */
     public function create($object)
     {
+        Log::info("Entering GroupMemberDataService.create(GroupMember)");
+        
         try
         {
             //SQL statment to add a user to a group
@@ -49,6 +51,7 @@ Class GroupMemberDataService implements DataServiceInterface
             $result = $this->connection->query($sqlStatement);
             
             //Returns the number of rows affected
+            Log::info("Exiting GroupMemberDataService.create(GroupMember)");
             return $result;
         }
         
@@ -83,6 +86,8 @@ Class GroupMemberDataService implements DataServiceInterface
      */
     public function delete($object)
     {
+        Log::info("Entering GroupMemberDataService.delete(GroupMember)");
+        
         try
         {
             //SQL statment to remove a user from a group
@@ -91,6 +96,7 @@ Class GroupMemberDataService implements DataServiceInterface
             
             $this->connection->query($sqlGroups);
             
+            Log::info("Exiting GroupMemberDataService.delete(GroupMember)");
             return $this->connection->affected_rows;
         }
         

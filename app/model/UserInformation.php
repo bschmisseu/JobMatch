@@ -11,7 +11,7 @@ namespace App\model;
  * User information model to store more information about the user
  */
 
-Class UserInformation
+Class UserInformation implements \JsonSerializable
 {
     private $bio;
     private $jobs;
@@ -103,4 +103,10 @@ Class UserInformation
     {
         $this->skills = $skills;
     }
+    
+    public function jsonSerialize()
+    {
+        return get_object_vars($this);
+    }
+
 }

@@ -11,7 +11,7 @@ namespace App\model;
  * UserCredential model inorder to store the username and password of the user
  */
 
-Class UserCredential
+Class UserCredential implements \JsonSerializable
 {
     private $userName;
     private $password;
@@ -62,4 +62,10 @@ Class UserCredential
     {
         $this->password = $password;
     }
+    
+    public function jsonSerialize()
+    {
+        return get_object_vars($this);
+    }
+
 }

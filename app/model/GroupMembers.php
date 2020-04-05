@@ -11,7 +11,7 @@
 
 namespace App\model;
 
-Class GroupMembers
+Class GroupMembers implements \JsonSerializable
 {
     private $groupId;
     private $userId;
@@ -61,5 +61,11 @@ Class GroupMembers
     public function setUserId($userId)
     {
         $this->userId = $userId;
-    }    
+    }
+    
+    public function jsonSerialize()
+    {
+        return get_object_vars($this);
+    }
+    
 }

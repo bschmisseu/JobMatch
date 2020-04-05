@@ -18,19 +18,23 @@ use Illuminate\Http\Request;
 use App\model\Groups;
 use App\business\GroupMemberBusinessService;
 use App\model\GroupMembers;
+use App\services\utility\LoggerInterface;
 
 class GroupController extends Controller
 {
     private $service;
     private $groupMemberService;
     
+    protected $logger;
+    
     /**
      * Defualt contstructor to initialize the Business Service object
      */
-    function __construct()
+    function __construct(LoggerInterface $logger)
     {
         $this->service = new GroupBusinessService();
         $this->groupMemberService = new GroupMemberBusinessService();
+        $this->logger = $logger; 
     }
     
     
@@ -41,6 +45,8 @@ class GroupController extends Controller
      */
     public function groupListPage()
     {
+        $this->logger->info("===Entering GroupController.groupListPage()");
+        
         try
         {
             //Gets an array of all users within the database 
@@ -48,6 +54,7 @@ class GroupController extends Controller
             ];
             
             //returns the admin page view
+            $this->logger->info("===Exiting GroupController.groupListPage() sent to GroupsPage");
             return view('groups')->with($data); 
         }
         
@@ -56,6 +63,7 @@ class GroupController extends Controller
         }
         
         catch (Exception $e) {
+            $this->logger->error("===Error GroupController.groupListPage()", array("message" => $e->getMessage()));
             return view('errorPage');
         } 
     }
@@ -68,6 +76,8 @@ class GroupController extends Controller
      */
     public function addGroup(Request $request)
     {
+        $this->logger->info("===Entering GroupController.addGroup()");
+        
         try
         {
             //Validates the form
@@ -84,6 +94,7 @@ class GroupController extends Controller
             $this->service->create($currentGroup);
             
             //Updates the session and returns the user back to the profile page
+            $this->logger->info("===Exiting GroupController.addGroup() sent to GroupsPage");
             return $this->groupListPage();
         }
         
@@ -92,6 +103,7 @@ class GroupController extends Controller
         }
         
         catch (Exception $e) {
+            $this->logger->error("===Error GroupController.addGroup()", array("message" => $e->getMessage()));
             return view('errorPage');
         } 
     }
@@ -104,6 +116,8 @@ class GroupController extends Controller
      */
     public function editGroup(Request $request)
     {
+        $this->logger->info("===Entering GroupController.editGroup()");
+        
         try
         {
             //Validates form
@@ -121,6 +135,7 @@ class GroupController extends Controller
             $this->service->update($currentGroup);
             
             //Updates the sessions and send the user back to their profile page
+            $this->logger->info("===Exiting GroupController.editGroup() sent to GroupsPage");
             return $this->groupListPage();
         }
         
@@ -129,6 +144,7 @@ class GroupController extends Controller
         }
         
         catch (Exception $e) {
+            $this->logger->error("===Error GroupController.editGroup()", array("message" => $e->getMessage()));
             return view('errorPage');
         } 
     }
@@ -141,6 +157,8 @@ class GroupController extends Controller
      */
     public function deleteGroup(Request $request)
     {
+        $this->logger->info("===Entering GroupController.deleteGroup()");
+        
         try
         {
             //Gathers all information from the html form
@@ -151,6 +169,7 @@ class GroupController extends Controller
             $this->service->delete($group);
             
             //Updates the sessions and send the user back to their profile page
+            $this->logger->info("===Exiting GroupController.deleteGroup() sent to GroupsPage");
             return $this->groupListPage();
         }
         
@@ -159,6 +178,7 @@ class GroupController extends Controller
         }
         
         catch (Exception $e) {
+            $this->logger->error("===Error GroupController.deleteGroup()", array("message" => $e->getMessage()));
             return view('errorPage');
         } 
     }
@@ -170,6 +190,8 @@ class GroupController extends Controller
      */
     public function joinGroup(Request $request)
     {
+        $this->logger->info("===Entering GroupController.joinGroup()");
+        
         try
         {
             $groupId = $request->input('groupId');
@@ -179,10 +201,12 @@ class GroupController extends Controller
             
             $this->groupMemberService->create($groupMember);
             
+            $this->logger->info("===Exiting GroupController.joinGroup() sent to GroupsPage");
             return $this->groupListPage();
         }
         
         catch (Exception $e) {
+            $this->logger->error("===Error GroupController.joinGroup()", array("message" => $e->getMessage()));
             return view('errorPage');
         } 
     }
@@ -194,6 +218,8 @@ class GroupController extends Controller
      */
     public function leaveGroup(Request $request)
     {
+        $this->logger->info("===Entering GroupController.leaveGroup()");
+        
         try
         {
             $groupId = $request->input('groupId');
@@ -203,10 +229,12 @@ class GroupController extends Controller
             
             $this->groupMemberService->delete($groupMember);
             
+            $this->logger->info("===Exiting GroupController.leaveGroup() sent to GroupsPage");
             return $this->groupListPage();
         }
         
         catch (Exception $e) {
+            $this->logger->error("===Error GroupController.leaveGroup()", array("message" => $e->getMessage()));
             return view('errorPage');
         }
     }

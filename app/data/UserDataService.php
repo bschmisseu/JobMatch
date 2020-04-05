@@ -36,7 +36,9 @@ Class UserDataService implements DataServiceInterface {
      * @see \App\data\DataServiceInterface::findById()
      */
     public function findById(int $id)
-    {  
+    {
+        Log::info("Entering UserDataService.findById(Int)");
+    
         try
         {
             //Stores all the SQL commands used to gather all the inforamtion of the user
@@ -74,6 +76,7 @@ Class UserDataService implements DataServiceInterface {
             $currentUser = new User($id, $firstName, $lastName, $email, $phoneNumber, $objectRole, $active, $currentUserCreds, $currentUserInfo);
             
             //Returns the full user model
+            Log::info("Exiting UserDataService.findById(Int)");
             return $currentUser;
         }
         
@@ -92,6 +95,8 @@ Class UserDataService implements DataServiceInterface {
      */
     public function create($object)
     {
+        Log::info("Entering UserDataService.create(User)");
+        
         try 
         {
             //SQL statment to check to see if the user name if already taken
@@ -119,6 +124,7 @@ Class UserDataService implements DataServiceInterface {
                 //If the prvious SQL Statment falid then it will return back to the business service
                 if($result == false)
                 {
+                    Log::info("Exiting UserDataService.create(User)");
                     return $result;
                 }
                 
@@ -138,6 +144,7 @@ Class UserDataService implements DataServiceInterface {
                     //Runs the query in the datbase
                     $result = $this->connection->query($sqlStatementInfo);
                     
+                    Log::info("Exiting UserDataService.create(User)");
                     return $result;
                 }
             }
@@ -145,6 +152,7 @@ Class UserDataService implements DataServiceInterface {
             else
             {
                 //If the username has already been taken return the error code of 5
+                Log::info("Exiting UserDataService.create(User)");
                 return 5;
             }
         }
@@ -164,6 +172,8 @@ Class UserDataService implements DataServiceInterface {
      */
     public function update($object)
     {
+        Log::info("Entering UserDataService.update(User)");
+        
         try 
         {
             //Varible initialed to keep track of all the rows affected throughout the update proccess 
@@ -187,7 +197,8 @@ Class UserDataService implements DataServiceInterface {
             $this->connection->query($sqlUserInfo);
             $numRowsAffected += $this->connection->affected_rows;
             
-            //Return the number of rows affected by the update 
+            //Return the number of rows affected by the update
+            Log::info("Exiting UserDataService.update(User)");
             return $numRowsAffected;
         }
         
@@ -201,6 +212,8 @@ Class UserDataService implements DataServiceInterface {
 
     public function delete($object)
     {
+        Log::info("Entering UserDataService.delete(User)");
+        
         try
         {
             //Varible initialed to keep track of all the rows affected throughout the deletion proccess 
@@ -222,6 +235,7 @@ Class UserDataService implements DataServiceInterface {
             $numRowsAffected += $this->connection->affected_rows;
             
             //Returns the number of rows affected
+            Log::info("Exiting UserDataService.delete(User)");
             return $numRowsAffected;
         }
         
@@ -240,6 +254,8 @@ Class UserDataService implements DataServiceInterface {
      */
     public function viewAll()
     {
+        Log::info("Entering UserDataService.viewAll()");
+        
         try
         {
             //creates an array to store the objects
@@ -265,6 +281,7 @@ Class UserDataService implements DataServiceInterface {
             }
             
             //returns the array of objects 
+            Log::info("Exiting UserDataService.viewAll()");
             return $objects;
         }
         
@@ -281,6 +298,8 @@ Class UserDataService implements DataServiceInterface {
     
     public function findByObject($object)
     {
+        Log::info("Entering UserDataService.findByObject(User)");
+        
         try 
         {
             //SQL statment that is run to return all the rows of the job obejcts in the database
@@ -292,17 +311,20 @@ Class UserDataService implements DataServiceInterface {
             
             if($numRowsAffected > 1)
             {
+                Log::info("Exiting UserDataService.findByObject(User)");
                 return -2;
             }
             
             else if($numRowsAffected == 1)
             {
                 $row = $resutls->fetch_assoc();
+                Log::info("Exiting UserDataService.findByObject(User)");
                 return $row['USER_ID'];
             }
             
             else 
             {
+                Log::info("Exiting UserDataService.findByObject(User)");
                 return -1;
             }
         }

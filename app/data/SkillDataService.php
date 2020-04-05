@@ -33,6 +33,7 @@ Class SkillDataService implements DataServiceInterface
      */
     public function findById(int $id)
     {
+        Log::info("Entering SkillDataService.findById(Int)");
         try 
         {
             //Stores all the SQL commands used to gather all the inforamtion of the skills
@@ -51,6 +52,7 @@ Class SkillDataService implements DataServiceInterface
             //Creates a Job object and stores it into the array of jobs
             $currentSkill = new Skill($skillId, $skillString, $userId);
             
+            Log::info("Exiting SkillDataService.findById(Int)");
             return $currentSkill;
         }
         
@@ -69,6 +71,8 @@ Class SkillDataService implements DataServiceInterface
      */
     public function create($object)
     {
+        Log::info("Entering SkillDataService.create(Skill)");
+        
         try 
         {
             $sqlStatement = "INSERT INTO `SKILLS` (`ID`, `SKILL_STRING`, `USER_ID`) VALUES (NULL, 
@@ -78,6 +82,7 @@ Class SkillDataService implements DataServiceInterface
             $result = $this->connection->query($sqlStatement);
             
             //Returns the number of rows affected
+            Log::info("Exiting SkillDataService.create(Skill)");
             return $result;
         }
         
@@ -96,12 +101,14 @@ Class SkillDataService implements DataServiceInterface
      */
     public function update($object)
     {   
+        Log::info("Entering SkillDataService.update(Skill)");
         try
         {
             $sqlSkill = "UPDATE `SKILLS` SET `SKILL_STRING` = '{$object->getSkillString()}' WHERE `SKILLS`.`ID` = {$object->getId()};";
             
             $this->connection->query($sqlSkill);
             
+            Log::info("Exiting SkillDataService.update(Skill)");
             return $this->connection->affected_rows;
         }
         
@@ -128,12 +135,15 @@ Class SkillDataService implements DataServiceInterface
      */
     public function delete($object)
     {
+        Log::info("Entering SkillDataService.delete(Skill)");
+        
         try
         {
             $sqlSkill = "DELETE FROM `SKILLS` WHERE `ID`= {$object->getId()};";
             
             $this->connection->query($sqlSkill);
             
+            Log::info("Exiting SkillDataService.delete(Skill)");
             return $this->connection->affected_rows;
         }
         
@@ -152,6 +162,8 @@ Class SkillDataService implements DataServiceInterface
      */
     public function viewAll()
     {
+        Log::info("Entering SkillDataService.viewAll()");
+        
         try 
         {
             //creates an array to store the objects
@@ -177,6 +189,7 @@ Class SkillDataService implements DataServiceInterface
             }
             
             //returns the array of objects
+            Log::info("Exiting SkillDataService.viewAll()");
             return $objects;
         }
         
@@ -195,6 +208,8 @@ Class SkillDataService implements DataServiceInterface
      */
     public function findByParent(int $parentId)
     {
+        Log::info("Entering SkillDataService.findByParent(Int)");
+        
         try 
         {
             //creates an array to store the objects
@@ -220,6 +235,7 @@ Class SkillDataService implements DataServiceInterface
             }
             
             //returns the array of objects
+            Log::info("Exiting SkillDataService.findByParent(Int)");
             return $objects;
         }
         

@@ -11,7 +11,7 @@ namespace App\model;
  * Job model inorder to store the information of the users past work expirence
  */
 
-Class Job
+Class Job implements \JsonSerializable
 {
     private $id;
     private $title;
@@ -187,4 +187,10 @@ Class Job
     {
         $this->edit = $edit;
     }
+    
+    public function jsonSerialize()
+    {
+        return get_object_vars($this);
+    }
+
 }

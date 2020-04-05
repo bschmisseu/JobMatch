@@ -33,6 +33,8 @@ Class EducationDataService implements DataServiceInterface
      */
     public function findById(int $id)
     {
+        Log::info("Entering EducationDataService.findById(Int)");
+        
         try
         {
             //Stores all the SQL commands used to gather all the inforamtion of the eudcation object
@@ -58,6 +60,7 @@ Class EducationDataService implements DataServiceInterface
             $currentEducation = new Education($educationId, $schoolName, $degree, $field, $educationStartDate,
                                               $educationEndDate, $educationDescription, $userId);
             
+            Log::info("Exiting EducationDataService.findById(Int)");
             return $currentEducation;
         }
         
@@ -76,6 +79,8 @@ Class EducationDataService implements DataServiceInterface
      */
     public function create($object)
     {
+        Log::info("Entering EducationDataService.create(Education)");
+        
         try
         {
             //Parameterised SQL to insert education in to the database
@@ -87,6 +92,7 @@ Class EducationDataService implements DataServiceInterface
             $result = $this->connection->query($sqlStatement);
             
             //Returns the number of rows affected
+            Log::info("Exiting EducationDataService.create(Education)");
             return $result;
         }
         
@@ -105,6 +111,8 @@ Class EducationDataService implements DataServiceInterface
      */
     public function update($object)
     {
+        Log::info("Entering EducationDataService.update(Education)");
+        
         try 
         { 
             //Parameterised SQL to update an education in to the database
@@ -117,6 +125,7 @@ Class EducationDataService implements DataServiceInterface
             $this->connection->query($sqlEducation);
             
             //Returns the number of rows affected
+            Log::info("Exiting EducationDataService.update(Education)");
             return $this->connection->affected_rows;
             
         }
@@ -136,6 +145,8 @@ Class EducationDataService implements DataServiceInterface
      */
     public function delete($object)
     {
+        Log::info("Entering EducationDataService.delete(Int)");
+        
         try
         {
             //Parameterised SQL to delete an education from the database
@@ -145,6 +156,7 @@ Class EducationDataService implements DataServiceInterface
             $this->connection->query($sqlEducation);
             
             //Returns the number of rows affected
+            Log::info("Exiting EducationDataService.delete(Int)");
             return $this->connection->affected_rows;
         }
         
@@ -163,6 +175,8 @@ Class EducationDataService implements DataServiceInterface
      */
     public function viewAll()
     {
+        Log::info("Entering EducationDataService.viewAll()");
+        
         try
         {
             //creates an array to store the objects
@@ -188,6 +202,7 @@ Class EducationDataService implements DataServiceInterface
             }
             
             //returns the array of objects
+            Log::info("Exiting EducationDataService.viewAll()");
             return $objects;
         }
         
@@ -206,6 +221,8 @@ Class EducationDataService implements DataServiceInterface
      */
     public function findByParent(int $parentId)
     {
+        Log::info("Entering EducationDataService.findByParent(Int)");
+        
         try
         {
             //creates an array to store the objects
@@ -231,6 +248,7 @@ Class EducationDataService implements DataServiceInterface
             }
             
             //returns the array of objects
+            Log::info("Exiting EducationDataService.findByParent(Int)");
             return $objects;
         }
         

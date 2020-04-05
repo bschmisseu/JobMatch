@@ -24,6 +24,7 @@ use App\business\EducationBusinessService;
 use App\model\Job;
 use App\business\SkillBusinessService;
 use App\model\Skill;
+use App\services\utility\LoggerInterface;
 
 session_start(); 
 
@@ -34,15 +35,18 @@ class UserController extends Controller
     private $jobService;
     private $skillService; 
     
+    protected $logger;
+    
     /**
      * Defualt contstructor to initialize the Business Service object
      */
-    function __construct()
+    function __construct(LoggerInterface $logger)
     {
         $this->service = new UserBusinessService();
         $this->jobService = new JobBusinessService();
         $this->educationService = new EducationBusinessService();
         $this->skillService = new SkillBusinessService();
+        $this->logger = $logger; 
     }
     
     /**
@@ -52,6 +56,8 @@ class UserController extends Controller
      */
     public function authenticateUser(Request $request)
     {
+        $this->logger->info("===Entering UserController.authenticateUser()");
+        
         try
         {
             $this->validateForm($request);
@@ -77,6 +83,7 @@ class UserController extends Controller
                     $_SESSION['currentUser'] = $currentUser;
                     $request->session()->put('currentUser', $currentUser);
                     $data = ['returnMessage' => "Welcome Back " . $currentUser->getFirstName()];
+                    $this->logger->info("===Exiting UserController.authenticateUser() sent to HomePage");
                     return view('homePage')->with($data);
                 }
                 
@@ -84,6 +91,7 @@ class UserController extends Controller
                 {
                     //If the users account has been disabled the user will be sent back to the login form with an error messages displaying such
                     $data = ['returnMessage' => "Your Account Has Been Temporarily Disabled!"];
+                    $this->logger->info("===Exiting UserController.authenticateUser() sent to Login");
                     return view('login')->with($data);
                 }
             }
@@ -92,6 +100,7 @@ class UserController extends Controller
             {
                 //If not user credentials match then the user will be sent back to the login form
                 $data = ['returnMessage' => "Incorrect User Name or Password!"];
+                $this->logger->info("===Exiting UserController.authenticateUser()");
                 return view('login')->with($data);
             }
         }
@@ -101,6 +110,7 @@ class UserController extends Controller
         }
         
         catch (Exception $e) {
+            $this->logger->error("===Error UserController.authenticateUser()", array("message" => $e->getMessage()));
             return view('errorPage');
         }   
     }
@@ -112,6 +122,8 @@ class UserController extends Controller
      */
     public function registerUser(Request $request)
     {
+        $this->logger->info("===Entering UserController.registerUser()");
+        
         try 
         {
             $this->validateFormUser($request);
@@ -138,6 +150,7 @@ class UserController extends Controller
                 //If there was no problem it will send the user to the home page 
                 $request->session()->put('currentUser', $_SESSION['currentUser']);
                 $data = ['returnMessage' => "Thank you for Joining "  . $user->getFirstName()];
+                $this->logger->info("===Exiting UserController.registerUser() sent to HomePage");
                 return view('homePage')->with($data);
             }
             
@@ -145,6 +158,7 @@ class UserController extends Controller
             {
                 //If the users information was already in the data base they were sent back to the registration form
                 $data = ['returnMessage' => "User Name Already Taken!"];
+                $this->logger->info("===Exiting UserController.registerUser() sent to RegistrationPage");
                 return view('registration')->with($data); 
             }
             
@@ -152,6 +166,7 @@ class UserController extends Controller
             {
                 //If there was an error proccessing their request they were sent back to the registration form
                 $data = ['returnMessage' => "Error Processing Request!"];
+                $this->logger->info("===Exiting UserController.registerUser() sent to LoginPage");
                 return view('login')->with($data); 
             }
         }
@@ -161,7 +176,7 @@ class UserController extends Controller
         }
         
         catch (Exception $e) {
-            echo "<script>console.log('Register User " . $e->getMessage() . "')</script>";
+            $this->logger->error("===Error UserController.registerUser()", array("message" => $e->getMessage()));
             return view('errorPage');
         } 
     }
@@ -174,6 +189,8 @@ class UserController extends Controller
      */
     public function addEducation(Request $request)
     {
+        $this->logger->info("===Entering UserController.addEducation()");
+        
         try
         {   
             //Validate the form
@@ -198,6 +215,7 @@ class UserController extends Controller
             $currentUser = $this->getCurrentUser($userId);
             $_SESSION['currentUser'] = $currentUser;
             $request->session()->put('currentUser', $currentUser);
+            $this->logger->info("===Exiting UserController.addEducation() sent to Profile");
             return view('profile');
         }
         
@@ -206,6 +224,7 @@ class UserController extends Controller
         }
         
         catch (Exception $e) {
+            $this->logger->error("===Error UserController.addEducation()", array("message" => $e->getMessage()));
             return view('errorPage');
         } 
     }
@@ -218,6 +237,8 @@ class UserController extends Controller
      */
     public function addJob(Request $request)
     {
+        $this->logger->info("===Entering UserController.addJob()");
+        
         try  
         {
             //Validates form
@@ -241,6 +262,7 @@ class UserController extends Controller
             $currentUser = $this->getCurrentUser($userId);
             $_SESSION['currentUser'] = $currentUser;
             $request->session()->put('currentUser', $currentUser);
+            $this->logger->info("===Exiting UserController.addJob() sent to profile");
             return view('profile');
         }
         
@@ -249,6 +271,7 @@ class UserController extends Controller
         }
         
         catch (Exception $e) {
+            $this->logger->error("===Error UserController.addJob()", array("message" => $e->getMessage()));
             return view('errorPage');
         } 
     }
@@ -261,6 +284,8 @@ class UserController extends Controller
      */
     public function addSkill(Request $request)
     {
+        $this->logger->info("===Entering UserController.addSkill()"); 
+        
         try 
         {
             //Validates the form
@@ -280,6 +305,7 @@ class UserController extends Controller
             $currentUser = $this->getCurrentUser($userId);
             $_SESSION['currentUser'] = $currentUser;
             $request->session()->put('currentUser', $currentUser);
+            $this->logger->info("===Exiting UserController.addSkill() sent to profile");
             return view('profile');
         }
         
@@ -288,6 +314,7 @@ class UserController extends Controller
         }
         
         catch (Exception $e) {
+            $this->logger->error("===Error UserController.addSkill()", array("message" => $e->getMessage()));
             return view('errorPage');
         } 
     }
@@ -300,6 +327,8 @@ class UserController extends Controller
      */
     public function deleteEducation(Request $request)
     {
+        $this->logger->info("===Entering UserController.deleteEducation()");
+        
         try 
         {
             //Gathers all information from the html form
@@ -314,6 +343,7 @@ class UserController extends Controller
             $currentUser = $this->getCurrentUser($userId);
             $_SESSION['currentUser'] = $currentUser;
             $request->session()->put('currentUser', $currentUser);
+            $this->logger->info("===Exiting UserController.deleteEducation() sent to profile");
             return view('profile');
         }
         
@@ -322,6 +352,7 @@ class UserController extends Controller
         }
         
         catch (Exception $e) {
+            $this->logger->error("===Error UserController.deleteEducation()", array("message" => $e->getMessage()));
             return view('errorPage');
         } 
     }
@@ -334,6 +365,8 @@ class UserController extends Controller
      */
     public function deleteJob(Request $request)
     {
+        $this->logger->info("===Entering UserController.deleteJob()");
+        
         try
         {   
             //Gathers all information from the html form
@@ -348,6 +381,7 @@ class UserController extends Controller
             $currentUser = $this->getCurrentUser($userId);
             $_SESSION['currentUser'] = $currentUser;
             $request->session()->put('currentUser', $currentUser);
+            $this->logger->info("===Exiting UserController.deleteJob() sent to profile");
             return view('profile');
         }
         
@@ -356,6 +390,7 @@ class UserController extends Controller
         }
         
         catch (Exception $e) {
+            $this->logger->error("===Error UserController.deleteJob()", array("message" => $e->getMessage()));
             return view('errorPage');
         } 
     }
@@ -368,6 +403,8 @@ class UserController extends Controller
      */
     public function deleteSkill(Request $request)
     {
+        $this->logger->info("===Entering UserController.deleteSkill()");
+        
         try
         {
             //Gathers all information from the html form
@@ -382,6 +419,7 @@ class UserController extends Controller
             $currentUser = $this->getCurrentUser($userId);
             $_SESSION['currentUser'] = $currentUser;
             $request->session()->put('currentUser', $currentUser);
+            $this->logger->info("===Exiting UserController.deleteSkill() sent to profile");
             return view('profile');
         }
         
@@ -390,6 +428,7 @@ class UserController extends Controller
         }
         
         catch (Exception $e) {
+            $this->logger->error("===Error UserController.deleteSkill()", array("message" => $e->getMessage()));
             return view('errorPage');
         } 
     }
@@ -402,6 +441,8 @@ class UserController extends Controller
      */
     public function openEducationEdit(Request $request)
     {
+        $this->logger->info("===Entering UserController.openEducationEdit()");
+        
         try
         {
             //Gathers all information from the html form
@@ -414,6 +455,7 @@ class UserController extends Controller
             //Updates the sessions and send the user back to their profile page
             $_SESSION['currentUser'] = $currentUser;
             $request->session()->put('currentUser', $currentUser);
+            $this->logger->info("===Exiting UserController.openEducationEdit() sent to profile");
             return view('profile');
         }
         
@@ -422,6 +464,7 @@ class UserController extends Controller
         }
         
         catch (Exception $e) {
+            $this->logger->error("===Error UserController.openEducationEdit()", array("message" => $e->getMessage()));
             return view('errorPage');
         } 
     }
@@ -434,6 +477,8 @@ class UserController extends Controller
      */
     public function openJobEdit(Request $request)
     {
+        $this->logger->info("===Entering UserController.openJobEdit()");
+        
         try
         {
             //Gathers all information from the html form
@@ -446,6 +491,7 @@ class UserController extends Controller
             //Updates the sessions and send the user back to their profile page
             $_SESSION['currentUser'] = $currentUser;
             $request->session()->put('currentUser', $currentUser);
+            $this->logger->info("===Exiting UserController.openJobEdit() sent to profile");
             return view('profile');
         }
         
@@ -454,6 +500,7 @@ class UserController extends Controller
         }
         
         catch (Exception $e) {
+            $this->logger->error("===Error UserController.openJobEdit()", array("message" => $e->getMessage()));
             return view('errorPage');
         } 
     }
@@ -466,6 +513,8 @@ class UserController extends Controller
      */
     public function editEducation(Request $request)
     {
+        $this->logger->info("===Entering UserController.editEducation()");
+        
         try
         {
             //Validates form
@@ -491,6 +540,7 @@ class UserController extends Controller
             $currentUser = $this->getCurrentUser($userId);
             $_SESSION['currentUser'] = $currentUser;
             $request->session()->put('currentUser', $currentUser);
+            $this->logger->info("===Exiting UserController.editEducation() sent to profile");
             return view('profile');
         }
         
@@ -499,6 +549,7 @@ class UserController extends Controller
         }
         
         catch (Exception $e) {
+            $this->logger->error("===Error UserController.editEducation()", array("message" => $e->getMessage()));
             return view('errorPage');
         } 
     }
@@ -511,6 +562,8 @@ class UserController extends Controller
      */
     public function editJob(Request $request)
     {
+        $this->logger->info("===Entering UserController.editJob()");
+        
         try
         {
             //Validates form
@@ -535,6 +588,7 @@ class UserController extends Controller
             $currentUser = $this->getCurrentUser($userId);
             $_SESSION['currentUser'] = $currentUser;
             $request->session()->put('currentUser', $currentUser);
+            $this->logger->info("===Exiting UserController.editJob() sent to profile");
             return view('profile');
         }
         
@@ -543,6 +597,7 @@ class UserController extends Controller
         }
         
         catch (Exception $e) {
+            $this->logger->error("===Error UserController.editJob()", array("message" => $e->getMessage()));
             return view('errorPage');
         } 
     }
@@ -555,6 +610,8 @@ class UserController extends Controller
      */
     public function editSkill(Request $request)
     {
+        $this->logger->info("===Entering UserController.editSkill()");
+        
         try
         {
             //Validates form
@@ -575,6 +632,7 @@ class UserController extends Controller
             $currentUser = $this->getCurrentUser($userId);
             $_SESSION['currentUser'] = $currentUser;
             $request->session()->put('currentUser', $currentUser);
+            $this->logger->info("===Exiting UserController.editSkill() sent to profile");
             return view('profile');
         }
         
@@ -583,6 +641,7 @@ class UserController extends Controller
         }
         
         catch (Exception $e) {
+            $this->logger->error("===Error UserController.editSkill()", array("message" => $e->getMessage()));
             return view('errorPage');
         } 
     }
@@ -594,15 +653,20 @@ class UserController extends Controller
      */
     public function logout(Request $request)
     {
+        $this->logger->info("===Entering UserController.logout()");
+        
         //Forgets the current user within the session
         $request->session()->forget('currentUser');
         
         //Returns the user to the index page
+        $this->logger->info("===Exiting UserController.logout() sent to index");
         return view('index');
     }
     
     private function getCurrentUser(int $id)
     {
+        $this->logger->info("===Entering UserController.getCurrentUser()", array("id" => $id));
+        
         try
         {
             $currentUser = $this->service->findById($id);
@@ -614,6 +678,7 @@ class UserController extends Controller
             $currentUser->getUserInformation()->setJobs($currentJobs);
             $currentUser->getUserInformation()->setSkills($currentSkills);
             
+            $this->logger->info("===Exiting UserController.getCurrentUser() private method");
             return $currentUser;
         }
         
@@ -622,6 +687,7 @@ class UserController extends Controller
         }
         
         catch (Exception $e) {
+            $this->logger->error("===Error UserController.getCurrentUser()", array("message" => $e->getMessage()));
             return view('errorPage');
         } 
     }

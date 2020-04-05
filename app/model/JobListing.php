@@ -11,7 +11,7 @@
 
 namespace App\model;
 
-Class JobListing 
+Class JobListing implements \JsonSerializable
 {
     private $id;
     private $companyName;
@@ -145,5 +145,11 @@ Class JobListing
     public function setDescription($description)
     {
         $this->description = $description;
-    }  
+    }
+    
+    public function jsonSerialize()
+    {
+        return get_object_vars($this);
+    }
+  
 }
