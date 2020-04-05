@@ -14,14 +14,14 @@ class LoggingServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->singleton('App\services\utility\LoggerInterface', function ($app) {
-            return new \App\Services\Utility\MyLogger();
+            return new \App\services\utility\MyLogger();
         });
     }
     
     public function provides()
     {
         echo "Deffered true and i am here in provides()";
-        return ['App\Services\Utility\LoggerInterface'];
+        return ['App\services\utility\LoggerInterface'];
     }
 
     /**
