@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * Bryce Schmisseur and Hermes Mimini
+ * Job Match Application 2.0
+ * JobRestController.php  1.0
+ * April 19 2020
+ *
+ * A contoller to mimin a rest service for the Job listing models
+ */
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;

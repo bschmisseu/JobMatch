@@ -93,9 +93,11 @@ Class GroupBusinessService implements BusinessServiceInterface
     public function delete($object)
     {
         Log::info("Entering GroupBusinessService.delete(Group)");
-        
+      
+        //Gets all users apart of the group
         $usersArray = $object->getUsers();
         
+        //Removes each group member 
         for($i = 0; $i < count($usersArray); $i++)
         {
             $groupMember = new GroupMembers($object->getId(), $usersArray[$i]);
@@ -104,6 +106,7 @@ Class GroupBusinessService implements BusinessServiceInterface
         }
         
         Log::info("Exiting GroupBusinessService.delete(Group)");
+        //Deletes the group
         return $this->dataService->delete($object);
     }
 
@@ -116,8 +119,10 @@ Class GroupBusinessService implements BusinessServiceInterface
     {
         Log::info("Entering GroupBusinessService.viewAll()");
         
+        //Gets all groups
         $groups = $this->dataService->viewAll();
 
+        //For each group its gets the users attached to the 
         for($i = 0; $i < count($groups); $i++)
         {
             $currentId = $groups[$i]->getUserId();

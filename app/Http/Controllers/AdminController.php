@@ -16,13 +16,19 @@ use Illuminate\Validation\ValidationException;
 use Exception;
 use App\business\UserBusinessService; 
 use App\business\JobListingBusinessService;
+use App\business\JobBusinessService;
+use App\business\EducationBusinessService;
+use App\business\SkillBusinessService;
 use App\model\JobListing;
 use App\services\utility\LoggerInterface;
 
 class AdminController extends Controller
 {
     private $service;
-    private $jobListingService; 
+    private $jobListingService;
+    private $educationService;
+    private $jobService;
+    private $skillService; 
     
     protected $logger;
     
@@ -32,6 +38,9 @@ class AdminController extends Controller
     function __construct(LoggerInterface $logger)
     {
         $this->service = new UserBusinessService();
+        $this->jobService = new JobBusinessService();
+        $this->educationService = new EducationBusinessService();
+        $this->skillService = new SkillBusinessService();
         $this->jobListingService = new JobListingBusinessService();
         $this->logger = $logger; 
     }
@@ -159,8 +168,17 @@ class AdminController extends Controller
             //Gets the users id that the request is made on the get more information 
             $userId = $request->input('userId');
             
+            $currentUser = $this->service->findById($userId);
+            $currentEducations = $this->educationService->findByParent($userId);
+            $currentJobs = $this->jobService->findByParent($userId);
+            $currentSkills = $this->skillService->findByParent($userId);
+            
+            $currentUser->getUserInformation()->setEducationHistory($currentEducations);
+            $currentUser->getUserInformation()->setJobs($currentJobs);
+            $currentUser->getUserInformation()->setSkills($currentSkills);
+            
             //Redirects the user to a page where all the information of the users is displayed with the users object
-            $data = ['currentUser' => $this->service->findById($userId)];
+            $data = ['currentUser' => $currentUser];
             $this->logger->info("===Exiting AdminController.viewUser() sent to admin");
             return view('adminUserView')->with($data); 
         }

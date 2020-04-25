@@ -31,6 +31,8 @@ Route::post('/loginUser', 'UserController@authenticateUser');
 
 Route::post('/registerUser', 'UserController@registerUser');
 
+Route::post('/editUser', 'UserController@editUser');
+
 Route::get('/logout', 'UserController@logout');
 
 Route::get('/admin', 'AdminController@adminPage');

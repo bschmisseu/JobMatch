@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * Bryce Schmisseur and Hermes Mimini
+ * Job Match Application 3.0
+ * DTO.php 2.0
+ * April 5 2020
+ *
+ * DTO is to surround the response of a rest call to return more information about the successfulness of the call
+ */
+
 namespace App\model;
 
 Class DTO implements \JsonSerializable

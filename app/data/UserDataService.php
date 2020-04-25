@@ -139,7 +139,7 @@ Class UserDataService implements DataServiceInterface {
                     $result = $this->connection->query($sqlStatementCred);
                     
                     //SQL statemnt to create write the inforamtion of the usercredential object
-                    $sqlStatementInfo = "INSERT INTO `USER_INFO` (`BIO`, `USER_ID`) VALUES ('BIO', '5');";
+                    $sqlStatementInfo = "INSERT INTO `USER_INFO` (`BIO`, `USER_ID`) VALUES ('BIO', '{$object->getIdNum()}');";
                     
                     //Runs the query in the datbase
                     $result = $this->connection->query($sqlStatementInfo);

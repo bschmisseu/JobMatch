@@ -140,3 +140,27 @@ $(function(){
 			}
 		});
 	});
+
+
+$(function(){
+	$(document).mouseup(function (e){
+		var container = $("#editUserInfo");
+		
+		if (!container.is(e.target)&& container.has(e.target).length === 0){
+			container.fadeOut();
+			}
+		});
+	});
+
+function openEditUserInfoForm(userId, firstName, lastName, phoneNumber, email, username, password, bio){
+  $('#editUserInfo').fadeToggle();
+  document.getElementById('editUserId').value = userId;
+  document.getElementById('editFirstName').value = firstName;
+  document.getElementById('editLastName').value = lastName;
+  document.getElementById('editPhoneNumber').value = phoneNumber;
+  document.getElementById('editEmail').value = email;
+  document.getElementById('editUserName').value = username;
+  document.getElementById('editPassword').value = password;
+  document.getElementById('editBio').value = bio;
+  
+}

@@ -11,7 +11,7 @@
 
 namespace App\data;
 
-Class Database 
+Class Database
 {
     private $servername = "sulnwdk5uwjw1r2k.cbetxkdyhwsb.us-east-1.rds.amazonaws.com";
     private $username = "v4ogsd1bmdo80lv1";

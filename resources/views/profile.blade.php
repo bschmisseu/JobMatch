@@ -143,7 +143,7 @@
                     		</tr>
                     		<tr align="center">
                     			<td style="display: inline">
-                    				<input type= "submit" value= "Edit" class="btn btn-primary">
+                    				<input type= "submit" value= "Edit" onclick="openEditUserInfoForm('{{session()->get('currentUser')->getIdNum()}}', '{{session()->get('currentUser')->getFirstName()}}', '{{session()->get('currentUser')->getLastName()}}', '{{session()->get('currentUser')->getPhoneNumber()}}', '{{session()->get('currentUser')->getEmail()}}', '{{session()->get('currentUser')->getUserCredential()->getUserName()}}', '{{session()->get('currentUser')->getUserCredential()->getPassword()}}', '{{session()->get('currentUser')->getUserInformation()->getBio()}}')" class="btn btn-primary">
                     				<input type= "submit" value= "Delete" class="btn btn-secondary">
                     			</td>
                 			</tr>
@@ -696,6 +696,127 @@
         		</tr>
         	</table>
         </form>
+    </div>
+    
+    <div id="editUserInfo">
+    	<h2>Edit User Info</h2>
+    	<form method="POST" action="editUser">
+    	<input type="hidden" name ="_token" value="<?php echo csrf_token()?>"/>
+        <input type="hidden" id="editUserId" name="userId" value="-1">
+    	<table style="text-align: left; width: 100%">
+            <tr>
+            	<td>
+                   <!-- Firstname Name -->
+                    <div class="form-group">
+                        <label class="col-md-8 control-label" for="firstName">First Name</label>  
+                        <div class="col-md-12">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fa fa-user"></i>
+                                </span>
+                            	<input id="editFirstName" name="firstName" type="text" placeholder="First Name" class="form-control input-md">
+                        	</div>
+        				</div>
+        			</div>
+        		</td>
+    		</tr>
+    		<tr>
+            	<td>
+        			<!--Last Name -->
+                    <div class="form-group">
+                        <label class="col-md-8 control-label" for="lastName">Last Name</label>  
+                        <div class="col-md-12">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fa fa-user"></i>
+                                </span>
+                            	<input id="editLastName" name="lastName" type="text" placeholder="Last Name" class="form-control input-md">
+                        	</div>
+        				</div>
+        			</div>
+        		</td>
+    		</tr>
+    		<tr>
+            	<td>
+        			<!--Phone Number -->
+                    <div class="form-group">
+                        <label class="col-md-8 control-label" for="phoneNumber">Phone number </label>  
+                            <div class="col-md-12">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">
+                                    	<i class="fa fa-phone"></i>
+                                	</span>
+                                <input id="editPhoneNumber" name="phoneNumber" type="text" placeholder="Phone number" class="form-control input-md">
+                            </div>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+            	<td>
+                    <!--Email -->
+                    <div class="form-group">
+                        <label class="col-md-8 control-label" for="email">Email Address</label>  
+                        <div class="col-md-12">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                	<i class="fa fa-envelope-o"></i>
+                        		</span>
+                        		<input id="editEmail" name="email" type="text" placeholder="Email Address" class="form-control input-md">
+                        	</div>
+                        </div>
+                    </div>
+        		</td>
+    		</tr>
+    		<tr>
+            	<td>
+                    <!-- User Name -->
+                    <div class="form-group">
+                        <label class="col-md-8 control-label" for="userName">User Name</label>  
+                        <div class="col-md-12">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fa fa-user"></i>
+                                </span>
+                            	<input id="editUserName" name="userName" type="text" placeholder="User Name" class="form-control input-md">
+                        	</div>
+        				</div>
+        			</div>
+        		</td>
+    		</tr>
+    		<tr>
+            	<td>
+        			<!-- password -->
+                    <div class="form-group">
+                        <label class="col-md-8 control-label" for="password">Password</label>  
+                        <div class="col-md-12">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">
+                                    <i class="fa fa-key"></i>
+                                </span>
+                            	<input id="editPassword" name="password" type="password" placeholder="Password" class="form-control input-md">
+                        	</div>
+        				</div>
+        			</div>
+        		</td>
+    		</tr>
+    		<tr>
+        		<td>
+        			<div class="form-group">
+                        <label class="col-md-8 control-label" for="bio">Overview (max 200 words)</label>
+                        <div class="col-md-12">                     
+                        	<textarea class="form-control" rows="2" id="editBio" name="bio"></textarea>
+                        </div>
+                    </div>
+        		</td>
+    		</tr>
+    		<tr align="center">
+    			<td >
+    				<input type= "submit" value= "Edit User" class="btn btn-primary">
+    			</td>
+    		</tr>
+    	</table>
+    	</form>
     </div>
     
     <script type="text/javascript">

@@ -116,6 +116,54 @@ class UserController extends Controller
     }
     
     /**
+     * Controller method to edit a users information
+     * @param Request $request
+     * @throws ValidationException
+     * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory
+     */
+    public function editUser(Request $request)
+    {
+        $this->logger->info("===Entering UserController.editUser()");
+        
+        try
+        {
+            $this->validateFormUser($request);
+            
+            //Gathers all information from the registration form
+            $userId = $request->input('userId');
+            $firstName =  $request->input('firstName');
+            $lastName =  $request->input('lastName');
+            $phoneNumber =  $request->input('phoneNumber');
+            $email =  $request->input('email');
+            $userName =  $request->input('userName');
+            $password =  $request->input('password');
+            $userBio = $request->input('bio');
+            
+            $userCredentials = new UserCredential($userName, $password);
+            $userInfo = new UserInformation($userBio, null, null, null);
+            $user = new User($userId, $firstName, $lastName, $email, $phoneNumber, 1, 1, $userCredentials, $userInfo);
+            
+            $this->service->update($user);
+            
+            //Updates the sessions and returns the user back to the profile page
+            $currentUser = $this->getCurrentUser($userId);
+            $_SESSION['currentUser'] = $currentUser;
+            $request->session()->put('currentUser', $currentUser);
+            $this->logger->info("===Exiting UserController.editUser() sent to Profile");
+            return view('profile');
+        }
+        
+        catch(ValidationException $invalidException) {
+            throw $invalidException;
+        }
+        
+        catch (Exception $e) {
+            $this->logger->error("===Error UserController.editUser()", array("message" => $e->getMessage()));
+            return view('errorPage');
+        }    
+    }
+    
+    /**
      * Controller method that takes in all information from registration form to push the information to the database
      * @param Request $request
      * @return \Illuminate\View\View|\Illuminate\Contracts\View\Factory - home page
